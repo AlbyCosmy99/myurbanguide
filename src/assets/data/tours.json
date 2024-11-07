@@ -1,0 +1,52 @@
+{
+    "tours": [
+      {
+        "id": 1,
+        "title": "Grand Tour of Italy",
+        "price": 1500,
+        "image": "https://a.travel-assets.com/findyours-php/viewfinder/images/res70/536000/536216-roman-forum.jpg",
+        "duration": "10 days",
+        "description": "Explore the best of Italy, from Rome to Venice, Florence, and Milan. Discover iconic landmarks, art, and delicious cuisine."
+      },
+      {
+        "id": 2,
+        "title": "Japanese Cultural Adventure",
+        "price": 2200,
+        "image": "https://www.triplab.it/wp-content/uploads/2024/03/Viaggio-di-gruppo-autunno-in-Giappone-Foliage-Edition.jpg",
+        "duration": "12 days",
+        "description": "Immerse yourself in the beauty and tradition of Japan. Visit Tokyo, Kyoto, and Osaka, experiencing temples, gardens, and authentic Japanese cuisine."
+      },
+      {
+        "id": 3,
+        "title": "Australian Outback Safari",
+        "price": 1800,
+        "image": "https://carter.eu/wp-content/uploads/2024/02/nick-dunn-OzUJa5Q9m1g-unsplash-scaled-1-2048x1366.jpg",
+        "duration": "7 days",
+        "description": "Experience the rugged beauty of the Australian Outback. Travel to Ayers Rock, Kakadu National Park, and Alice Springs, taking in breathtaking landscapes and wildlife."
+      },
+      {
+        "id": 4,
+        "title": "Safari in Kenya",
+        "price": 2500,
+        "image": "https://www.sivola.it/media/cache/header/rc/N10eGCgC/a8/6d/822f9162405a38f29675fbb980e7.jpeg",
+        "duration": "8 days",
+        "description": "Go on an unforgettable safari through Kenya's stunning savannahs. See lions, elephants, and giraffes in their natural habitat across Maasai Mara and Amboseli."
+      },
+      {
+        "id": 5,
+        "title": "French Riviera & Provence",
+        "price": 2000,
+        "image": "https://content.tui.co.uk/adamtui/2023_3/28_8/b97242eb-e3ad-44a0-a614-afd3008bb140/ACC_955618_shutterstock_1936145836WebOriginalCompressed.jpg",
+        "duration": "6 days",
+        "description": "Discover the elegance of the French Riviera and the charm of Provence. Enjoy visits to Nice, Cannes, and the vineyards of Provence."
+      },
+      {
+        "id": 6,
+        "title": "Patagonian Explorer",
+        "price": 3000,
+        "image": "https://cdn.gap360.com/tpl/lib/img/private/media/773-original.jpeg?aspect_ratio=2400:1350&width=2400&width=2400&height=1350&quality=85",
+        "duration": "9 days",
+        "description": "Adventure through Patagonia, exploring Argentina's and Chile's majestic mountains, glaciers, and lakes. Ideal for nature lovers and hiking enthusiasts."
+      }
+    ]
+  }
