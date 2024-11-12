@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css'
 import App from './App.tsx'
 import TourSingle from "./pages/TourSingle.tsx";
-import Home from "./home/Home.tsx";
+import Home from "./pages/home/Home.tsx";
+
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 import {
   createBrowserRouter,
@@ -28,7 +31,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <ThemeProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </ThemeProvider>
 );

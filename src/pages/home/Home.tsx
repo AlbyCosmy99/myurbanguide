@@ -1,22 +1,22 @@
-import '../App.css'
-import Slider from "../components/slider/slider"
-import SectionContainer from "../components/SectionContainer"
-import SmallCard from "../components/cards/SmallCard"
-import useStoreTour from "../stores/zustand/store"
+import '../../App.css'
+import Slider from "../../components/slider/slider"
+import SectionContainer from "../../components/SectionContainer"
+import SmallCard from "../../components/cards/SmallCard"
+import useStoreTour from "../../stores/zustand/store"
 import { useEffect } from "react"
-import LocationCard from "../components/cards/LocationCard"
-import img1 from '../../src/assets/img/Airbnb-1.webp';
-import img2 from '../../src/assets/img/Airbnb-2.webp';
-import img3 from '../../src/assets/img/Airbnb-3.webp';
-import img4 from '../../src/assets/img/Airbnb-4.webp';
-import newsletterImg from '../../src/assets/img/newsletter-home.jpg';
+import LocationCard from "../../components/cards/LocationCard"
+import img1 from '../../../src/assets/img/Airbnb-1.webp';
+import img2 from '../../../src/assets/img/Airbnb-2.webp';
+import img3 from '../../../src/assets/img/Airbnb-3.webp';
+import img4 from '../../../src/assets/img/Airbnb-4.webp';
+import newsletterImg from '../../../src/assets/img/newsletter-home.jpg';
 
 function Home() {
     const { tours, toursLoading, getTour } = useStoreTour()
 
     useEffect(() => {
         getTour()
-    }, [getTour])
+    }, [])
 
     return (
         <>
