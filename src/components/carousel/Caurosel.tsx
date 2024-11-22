@@ -1,6 +1,5 @@
 import { Carousel } from "@material-tailwind/react";
 
-
 const CarouselCustomNavigation = () => {
     return (
         //@ts-ignore
@@ -35,7 +34,6 @@ const CarouselCustomNavigation = () => {
                 className="h-80 w-full object-cover"
             />
         </Carousel>
-
     );
 }
 

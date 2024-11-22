@@ -16,6 +16,10 @@ import {
 } from '@headlessui/react'
 import { ChevronDownIcon, MapPinIcon } from '@heroicons/react/20/solid'
 import { Link } from "react-router-dom";
+import ModalLogin from "../../modal/ModalLogin";
+import useStoreModal from "../../../stores/zustand/StoreModal";
+import { useEffect, useState } from "react";
+import useStoreTour from "../../../stores/zustand/Store";
 
 const products = [
     { name: 'Verona', description: '200 chilometri di distanza', href: '#', src: img1 },
@@ -28,10 +32,28 @@ const callsToAction = [
 ]
 
 const NavBar = () => {
+    const { toggleModal } = useStoreModal()
+    const { tours } = useStoreTour()
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filteredTour, setFilteredTour] = useState([])
+    const [isFocused, setIsFocused] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const filtered = tours.filter((tour) =>
+                tour.title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            setFilteredTour(filtered)
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, [searchQuery])
+
     return (
         <div className=" w-full bg-white shadow-sm">
             <div className="py-4 border-b-[1px] max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px4">
                 <div className="flex flex-row items-center justify-between gap-6">
+                    <ModalLogin />
                     <Link to=""><img src={logo} width="200" height={100} alt="logo" /></Link>
                     <PopoverGroup className="hidden lg:flex lg:gap-x-6">
                         <Popover className="relative">
@@ -85,20 +107,34 @@ const NavBar = () => {
                             Assistenza
                         </a>
                     </PopoverGroup>
-                    <div className="flex gap-6 flex-row items-center justify-between">
+                    <div className="relative flex gap-6 flex-row items-center justify-between">
                         <div className="flex border-0 py-1 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 rounded-full"><form >
                             <input
                                 type="text"
                                 name="search"
                                 id="search"
-                                className="border-0 pl-4 ring-0 focus:ring-0 focus-visible:ring-0 focus:outline-none" />
+                                className="border-none outline-none bg-transparent box-shadow-none appearance-none pl-4 focus:ring-0 focus-visible:ring-0 focus:outline-none w-64 transition-all duration-300 ease-out focus:w-96"
+                                onFocus={() => setIsFocused(true)}
+                                onBlur={() => setIsFocused(false)}
+                                onChange={(e) => setSearchQuery(e.target.value)} />
                             <input
                                 type="submit"
                                 className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
                                 value="Cerca" />
                         </form></div>
-                        <div className="flex flex-col items-center"><RiUserSmileLine size="1.6rem" className="text-gray-700" />
-                            <small className="text-gray-900">Utente</small>
+                        <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${filteredTour.length > 0 && searchQuery.length > 0 && isFocused === true ? "visible" : "hidden"
+                            }`}>
+                            {filteredTour.map((tour, index) => (
+                                <div
+                                    key={index}
+                                    className="p-2 hover:bg-gray-100 cursor-pointer"
+                                >
+                                    {tour.title}
+                                </div>
+                            ))}
+                        </div>
+                        <div onClick={toggleModal} className="flex flex-col items-center"><RiUserSmileLine size="1.6rem" className="text-gray-700" />
+                            <small className="text-gray-900">Accedi</small>
                         </div>
                         <div className="flex flex-col items-center"><RiShoppingCartLine size="1.6rem" className="text-gray-700" />
                             <small className="text-gray-900">Carrello</small>

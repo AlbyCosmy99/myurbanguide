@@ -2,7 +2,7 @@ import '../../App.css'
 import Slider from "../../components/slider/slider"
 import SectionContainer from "../../components/SectionContainer"
 import SmallCard from "../../components/cards/SmallCard"
-import useStoreTour from "../../stores/zustand/store"
+import useStoreTour from "../../stores/zustand/Store"
 import { useEffect } from "react"
 import LocationCard from "../../components/cards/LocationCard"
 import img1 from '../../../src/assets/img/Airbnb-1.webp';
@@ -33,7 +33,7 @@ function Home() {
                                 title={tour.title}
                                 description={tour.description}
                                 price={tour.price}
-                                image={tour.image}
+                                image={tour.featured_image}
                                 duration={tour.duration}
                                 id={tour.id}
                             />

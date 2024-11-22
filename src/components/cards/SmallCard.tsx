@@ -23,7 +23,7 @@ const SmallCard: React.FC<CardProps> = ({
     return (
         toursLoading ?
             (
-                <div className="border border-gray-300 rounded-lg">
+                <div className="border border-gray-300 rounded-lg h-100">
                     <div className="flex items-center justify-center h-48 bg-gray-100 rounded-md dark:bg-gray-700"></div>
                     <div role="status" className="p-4 rounded-lg animate-pulse md:p-6 dark:border-gray-700">
 
@@ -44,10 +44,10 @@ const SmallCard: React.FC<CardProps> = ({
                 </div>
             ) : (
                 <Link to={"/tours/" + id}>
-                    <div className="border border-gray-300 rounded-lg cursor-pointer hover:scale-105 transition duration-200 ease-out">
+                    <div className="border border-gray-300 rounded-lg cursor-pointer hover:scale-105 transition duration-200 ease-out h-full">
                         <div
                             className="flex items-center justify-center h-48 rounded-t-md bg-center bg-no-repeat bg-cover"
-                            style={{ backgroundImage: `url(${image})` }}
+                            style={{ backgroundImage: `url(src/assets/img/${image})` }}
                         ></div>
                         <div role="status" className="p-4 md:p-6 dark:border-gray-700">
                             <h1 className="text-lg font-bold pb-1">{title}</h1>

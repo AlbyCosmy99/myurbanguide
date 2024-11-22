@@ -5,7 +5,8 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+    },
   },
   plugins: [],
 }
@@ -17,5 +18,6 @@ module.exports = withMT({
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+  ],
 });
