@@ -20,6 +20,7 @@ import ModalLogin from "../../modal/ModalLogin";
 import useStoreModal from "../../../stores/zustand/StoreModal";
 import { useEffect, useState } from "react";
 import useStoreTour from "../../../stores/zustand/Store";
+import Tour from "../../../types/Tour";
 
 const products = [
     { name: 'Verona', description: '200 chilometri di distanza', href: '#', src: img1 },
@@ -34,8 +35,9 @@ const callsToAction = [
 const NavBar = () => {
     const { toggleModal } = useStoreModal()
     const { tours } = useStoreTour()
+
     const [searchQuery, setSearchQuery] = useState('')
-    const [filteredTour, setFilteredTour] = useState([])
+    const [filteredTour, setFilteredTour] = useState<Tour[]>([])
     const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
@@ -122,7 +124,7 @@ const NavBar = () => {
                                 className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
                                 value="Cerca" />
                         </form></div>
-                        <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${filteredTour.length > 0 && searchQuery.length > 0 && isFocused === true ? "visible" : "hidden"
+                        <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${filteredTour.length > 0 && searchQuery.length > 0 && isFocused ? "visible" : "hidden"
                             }`}>
                             {filteredTour.map((tour, index) => (
                                 <div
