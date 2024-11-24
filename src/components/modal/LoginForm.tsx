@@ -1,11 +1,23 @@
+import { useState } from "react";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+
 
 interface LoginFormProps {
     changeForm: () => void
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
+    const [type, setType] = useState('password')
+
+    const changeTypePassword = () => {
+        if (type === 'password') {
+            setType('text')
+        } else {
+            setType('password')
+        }
+    }
 
     return (
         <>
@@ -45,15 +57,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
                                     </a>
                                 </div>
                             </div>
-                            <div className="mt-1">
+                            <div className="mt-1 relative">
                                 <input
                                     id="password"
                                     name="password"
-                                    type="password"
+                                    type={type}
                                     required
                                     autoComplete="current-password"
-                                    className="block rounded-full w-full border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E29C00] sm:text-sm/6"
+                                    className="block rounded-full w-full border-0 py-2 px-4 pl-11 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E29C00] sm:text-sm/6 autofill:bg-white autofill:border-white"
                                 />
+                                <div onClick={changeTypePassword} className="absolute top-[10px] left-4">
+                                    {
+                                        type === 'password'
+                                            ? <FaRegEye size={20} />
+                                            : <FaRegEyeSlash size={20} />
+                                    }
+                                </div>
                             </div>
                         </div>
 

@@ -76,7 +76,7 @@ const TourSingle = () => {
                                 key={index}
                                 src={`/src/assets/img/${galleryImage}`}
                                 alt="image 3"
-                                className="h-80 w-full object-cover"
+                                className=" w-full object-cover"
                             />
                         ))
 

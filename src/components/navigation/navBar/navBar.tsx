@@ -21,6 +21,7 @@ import useStoreModal from "../../../stores/zustand/StoreModal";
 import { useEffect, useState } from "react";
 import useStoreTour from "../../../stores/zustand/Store";
 import Tour from "../../../types/Tour";
+import LoadingIcon from "../../customIcons/Loading";
 
 const products = [
     { name: 'Verona', description: '200 chilometri di distanza', href: '#', src: img1 },
@@ -39,17 +40,45 @@ const NavBar = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [filteredTour, setFilteredTour] = useState<Tour[]>([])
     const [isFocused, setIsFocused] = useState(false);
+    const [loading, setLoading] = useState(false)
+
+    // useEffect(() => {
+    //     if (searchQuery.length > 0) {
+    //         setLoading(true)
+    //         const timer = setTimeout(() => {
+    //             const filtered = tours.filter((tour) =>
+    //                 tour.title.toLowerCase().includes(searchQuery.toLowerCase())
+    //             );
+    //             setFilteredTour(filtered)
+    //             setLoading(false)
+    //         }, 2000);
+
+    //         return () => clearTimeout(timer);
+    //     } else {
+    //         setLoading(false)
+    //     }
+    // }, [searchQuery])
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            const filtered = tours.filter((tour) =>
-                tour.title.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setFilteredTour(filtered)
-        }, 2000);
+        if (searchQuery.length > 0) {
+            setLoading(true)
+            const timer = setTimeout(() => {
+                const searchQueryTerms = searchQuery.toLowerCase().split("")
 
-        return () => clearTimeout(timer);
-    }, [searchQuery])
+                const filtered = tours.filter((tour) => {
+                    const title = tour.title.toLowerCase()
+                    return searchQueryTerms.every((term) => title.includes(term))
+                });
+
+                setFilteredTour(filtered)
+                setLoading(false)
+            }, 500)
+
+            return () => clearTimeout(timer)
+        } else {
+            setLoading(false);
+        }
+    }, [searchQuery]);
 
     return (
         <div className=" w-full bg-white shadow-sm">
@@ -72,17 +101,16 @@ const NavBar = () => {
                                     {products.map((item) => (
                                         <div
                                             key={item.name}
-                                            className="group relative flex items-center gap-x-6 rounded-lg px-2 py-1 text-sm leading-6 hover:bg-gray-50"
+                                            className="group mb-2 relative flex items-center gap-x-2 rounded-lg px-2 py-2 text-sm leading-6 hover:bg-gray-100"
                                         >
-                                            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                                                <img src={item.src} className="w-10 h-10 rounded-sm" />
-                                            </div>
+
+                                            <img src={item.src} className="w-10 h-10 rounded-md" />
+
                                             <div className="flex-auto">
-                                                <a href={item.href} className="block font-semibold text-gray-900">
+                                                <a href={item.href} className="leading-4 block font-semibold text-gray-900">
                                                     {item.name}
-                                                    <span className="absolute inset-0" />
                                                 </a>
-                                                <p className="mt-1 text-gray-600">{item.description}</p>
+                                                <p className="text-gray-600">{item.description}</p>
                                             </div>
                                         </div>
                                     ))}
@@ -110,7 +138,7 @@ const NavBar = () => {
                         </a>
                     </PopoverGroup>
                     <div className="relative flex gap-6 flex-row items-center justify-between">
-                        <div className="flex border-0 py-1 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 rounded-full"><form >
+                        <div className="flex border-0 py-1 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 rounded-full"><form className="flex gap-2">
                             <input
                                 type="text"
                                 name="search"
@@ -118,23 +146,43 @@ const NavBar = () => {
                                 className="border-none outline-none bg-transparent box-shadow-none appearance-none pl-4 focus:ring-0 focus-visible:ring-0 focus:outline-none w-64 transition-all duration-300 ease-out focus:w-96"
                                 onFocus={() => setIsFocused(true)}
                                 onBlur={() => setIsFocused(false)}
-                                onChange={(e) => setSearchQuery(e.target.value)} />
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                autoComplete="off"
+                            />
+                            <LoadingIcon loading={loading} isFocused={isFocused} />
                             <input
                                 type="submit"
                                 className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
                                 value="Cerca" />
                         </form></div>
-                        <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${filteredTour.length > 0 && searchQuery.length > 0 && isFocused ? "visible" : "hidden"
-                            }`}>
-                            {filteredTour.map((tour, index) => (
-                                <div
-                                    key={index}
-                                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                                >
-                                    {tour.title}
+
+                        {
+                            searchQuery.length === 0 ? (
+                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                                    <p>Inizia a digita per trovare un Tour</p>
                                 </div>
-                            ))}
-                        </div>
+                            ) : filteredTour.length === 0 ? (
+                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                                    <p>Nessun risultato</p>
+                                </div>
+                            ) : (
+                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                                    {filteredTour.map((tour, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex mb-1 items-center gap-x-3 py-2 px-2 hover:bg-gray-100 cursor-pointer rounded-lg"
+                                        >
+                                            <img src={`src/assets/img/${tour.featured_image}`} className="w-11 h-11 rounded-md object-cover" />
+                                            <a className="block leading-4 text-gray-900">
+                                                {tour.title}
+                                            </a>
+
+                                        </div>
+                                    ))}
+                                </div>
+                            )
+                        }
+
                         <div onClick={toggleModal} className="flex flex-col items-center"><RiUserSmileLine size="1.6rem" className="text-gray-700" />
                             <small className="text-gray-900">Accedi</small>
                         </div>
