@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import useStoreTour from "../../../stores/zustand/Store";
 import Tour from "../../../types/Tour";
 import LoadingIcon from "../../customIcons/Loading";
+import stringContainsAllArray from "../../../utils/stringContainsAllArray";
 
 const products = [
     { name: 'Verona', description: '200 chilometri di distanza', href: '#', src: img1 },
@@ -42,33 +43,17 @@ const NavBar = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [loading, setLoading] = useState(false)
 
-    // useEffect(() => {
-    //     if (searchQuery.length > 0) {
-    //         setLoading(true)
-    //         const timer = setTimeout(() => {
-    //             const filtered = tours.filter((tour) =>
-    //                 tour.title.toLowerCase().includes(searchQuery.toLowerCase())
-    //             );
-    //             setFilteredTour(filtered)
-    //             setLoading(false)
-    //         }, 2000);
-
-    //         return () => clearTimeout(timer);
-    //     } else {
-    //         setLoading(false)
-    //     }
-    // }, [searchQuery])
 
     useEffect(() => {
         if (searchQuery.length > 0) {
             setLoading(true)
             const timer = setTimeout(() => {
-                const searchQueryTerms = searchQuery.toLowerCase().split("")
+                const searchQueryTerms = searchQuery.toLowerCase().split(" ")
 
                 const filtered = tours.filter((tour) => {
-                    const title = tour.title.toLowerCase()
-                    return searchQueryTerms.every((term) => title.includes(term))
+                    return stringContainsAllArray(tour.title, searchQueryTerms)
                 });
+                console.log(filtered)
 
                 setFilteredTour(filtered)
                 setLoading(false)
