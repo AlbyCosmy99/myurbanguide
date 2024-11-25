@@ -12,11 +12,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
     const [type, setType] = useState('password')
 
     const changeTypePassword = () => {
-        if (type === 'password') {
-            setType('text')
-        } else {
-            setType('password')
-        }
+        setType(type === 'password' ? 'text' : 'password')
     }
 
     return (

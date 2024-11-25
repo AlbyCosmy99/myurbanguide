@@ -141,18 +141,15 @@ const NavBar = () => {
                                 value="Cerca" />
                         </form></div>
 
-                        {
-                            searchQuery.length === 0 ? (
-                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                        <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                            {
+                                searchQuery.length === 0 ? (
                                     <p>Inizia a digita per trovare un Tour</p>
-                                </div>
-                            ) : filteredTour.length === 0 ? (
-                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
+                                ) : filteredTour.length === 0 ? (
                                     <p>Nessun risultato</p>
-                                </div>
-                            ) : (
-                                <div className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? "visible" : "hidden"}`}>
-                                    {filteredTour.map((tour, index) => (
+                                ) : (
+
+                                    filteredTour.map((tour, index) => (
                                         <div
                                             key={index}
                                             className="flex mb-1 items-center gap-x-3 py-2 px-2 hover:bg-gray-100 cursor-pointer rounded-lg"
@@ -163,10 +160,11 @@ const NavBar = () => {
                                             </a>
 
                                         </div>
-                                    ))}
-                                </div>
-                            )
-                        }
+                                    ))
+                                )
+                            }
+                        </div>
+
 
                         <div onClick={toggleModal} className="flex flex-col items-center"><RiUserSmileLine size="1.6rem" className="text-gray-700" />
                             <small className="text-gray-900">Accedi</small>
