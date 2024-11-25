@@ -1,21 +1,22 @@
-import { create } from 'zustand'
-import { persist } from "zustand/middleware"
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type StoreModal = {
-    modalOpen: boolean
-    toggleModal: () => void
-    setModalOpen: () => void
-}
+  modalOpen: boolean;
+  toggleModal: () => void;
+  setModalOpen: () => void;
+};
 
-const useStoreModal = create<StoreModal>((persist as any)(
+const useStoreModal = create<StoreModal>(
+  (persist as any)(
     //@ts-ignore
-    (set) => ({
+    set => ({
+      modalOpen: true,
+      toggleModal: () => set((state: any) => ({ modalOpen: !state.modalOpen })),
+      setModalOpen: (value: boolean) => set({ modalOpen: value }),
+    }),
+    { name: 'modalStore' },
+  ),
+);
 
-        modalOpen: true,
-        toggleModal: () => set((state: any) => ({ modalOpen: !state.modalOpen })),
-        setModalOpen: (value: boolean) => set({ modalOpen: value }),
-
-    }), { name: 'modalStore' }
-))
-
-export default useStoreModal
+export default useStoreModal;

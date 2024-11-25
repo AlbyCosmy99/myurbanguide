@@ -1,132 +1,171 @@
-
-
-  {
-    "tours": [
-      {
-        "id": 1,
-        "title": "Dubai: Safari nel deserto, Quad Bike, Giro in cammello e Al Khayma Camp",
-        "meeting_point": {
-          "latitude": 24.9632,
-          "longitude": 55.1694,
-          "address": "Dubai, Emirati Arabi Uniti"
-        },
-        "description": "Vivi l'avventura nel deserto di Dubai con un safari in 4x4, emozionanti giri in quad e in cammello, seguiti da una serata all'Al Khayma Camp con spettacoli dal vivo e cena tradizionale.",
-        "price": 100,
-        "duration": "6 ore",
-        "includes": ["Trasporto in 4x4", "Quad bike", "Cena BBQ", "Spettacoli di danza"],
-        "excludes": ["Bevande alcoliche"],
-        "highlights": ["Quad bike sulle dune", "Giro in cammello", "Cena e spettacoli all'Al Khayma Camp"],
-        "gallery": ["desert1.jpg", "desert2.jpg", "desert3.jpg"],
-        "featured_image": "desert_highlight.jpg",
-        "additional_info": {
-          "group_size": "Max 15 persone",
-          "recommended_gear": ["Abiti comodi", "Occhiali da sole"]
-        }
+{
+  "tours": [
+    {
+      "id": 1,
+      "title": "Dubai: Safari nel deserto, Quad Bike, Giro in cammello e Al Khayma Camp",
+      "meeting_point": {
+        "latitude": 24.9632,
+        "longitude": 55.1694,
+        "address": "Dubai, Emirati Arabi Uniti"
       },
-      {
-        "id": 2,
-        "title": "Cappadocia: Volo in mongolfiera a Goreme all'alba",
-        "meeting_point": {
-          "latitude": 38.6431,
-          "longitude": 34.8265,
-          "address": "Göreme, Cappadocia, Turchia"
-        },
-        "description": "Un magico volo in mongolfiera sopra i paesaggi unici della Cappadocia all'alba, con una vista spettacolare su camini delle fate e vallate.",
-        "price": 150,
-        "duration": "1 ora (volo) + 1 ora trasferimento",
-        "includes": ["Volo in mongolfiera", "Certificato di volo", "Colazione leggera"],
-        "excludes": ["Trasporto fino al meeting point"],
-        "highlights": ["Volo panoramico all'alba", "Vista sulle valli e i camini delle fate", "Esperienza unica in Turchia"],
-        "gallery": ["cappadocia1.jpg", "cappadocia2.jpg", "cappadocia3.jpg"],
-        "featured_image": "cappadocia_highlight.jpg",
-        "additional_info": {
-          "age_restriction": "6+",
-          "meeting_time": "Prima dell'alba"
-        }
-      },
-      {
-        "id": 3,
-        "title": "Dubai: I souk della vecchia Dubai, il giro in abra e il tour gastronomico",
-        "meeting_point": {
-          "latitude": 25.2644,
-          "longitude": 55.3017,
-          "address": "Al Fahidi Historical District, Dubai, Emirati Arabi Uniti"
-        },
-        "description": "Un'immersione nei mercati tradizionali di Dubai con degustazioni di cibo locale e un giro sul tradizionale taxi acquatico abra.",
-        "price": 55,
-        "duration": "3 ore",
-        "includes": ["Guida locale", "Giro in abra", "Degustazioni di cibi locali"],
-        "excludes": ["Spese personali nei souk"],
-        "highlights": ["Visita al Gold Souk", "Giro in abra", "Assaggi di piatti tradizionali"],
-        "gallery": ["dubai_souk1.jpg", "dubai_souk2.jpg", "dubai_souk3.jpg"],
-        "featured_image": "dubai_souk_highlight.jpg",
-        "additional_info": {
-          "language": ["Inglese", "Arabo"],
-          "clothing_advice": "Vestirsi modestamente"
-        }
-      },
-      {
-        "id": 4,
-        "title": "Atene: Escursione di un giorno a Capo Sounion e al Tempio di Poseidone al tramonto",
-        "meeting_point": {
-          "latitude": 37.4246,
-          "longitude": 24.0239,
-          "address": "Centro di Atene, Grecia"
-        },
-        "description": "Una suggestiva escursione a Capo Sounion con visita al Tempio di Poseidone e vista spettacolare al tramonto.",
-        "price": 70,
-        "duration": "5 ore",
-        "includes": ["Trasporto da Atene", "Guida turistica", "Ingresso al sito"],
-        "excludes": ["Pasti e bevande"],
-        "highlights": ["Tramonto sul Mar Egeo", "Visita al Tempio di Poseidone", "Fotografia scenografica"],
-        "gallery": ["capo_sounion1.jpg", "capo_sounion2.jpg", "capo_sounion3.jpg"],
-        "featured_image": "capo_sounion_highlight.jpg",
-        "additional_info": {
-          "meeting_time": "Pomeriggio",
-          "recommended_items": ["Macchina fotografica", "Scarpe comode"]
-        }
-      },
-      {
-        "id": 5,
-        "title": "Marrakech: Tour guidato a piedi dei souk della Medina",
-        "meeting_point": {
-          "latitude": 31.6295,
-          "longitude": -7.9811,
-          "address": "Piazza Jemaa el-Fnaa, Marrakech, Marocco"
-        },
-        "description": "Scopri i colori, i profumi e i sapori dei souk di Marrakech in una passeggiata guidata all'interno della Medina.",
-        "price": 40,
-        "duration": "3 ore",
-        "includes": ["Guida locale", "Assaggi di tè alla menta"],
-        "excludes": ["Acquisti nei souk"],
-        "highlights": ["Esplora i mercati della Medina", "Conosci le tradizioni locali", "Scopri i prodotti tipici marocchini"],
-        "gallery": ["medina1.jpg", "medina2.jpg", "medina3.jpg"],
-        "featured_image": "medina_highlight.jpg",
-        "additional_info": {
-          "clothing_advice": "Abbigliamento modesto consigliato",
-          "family_friendly": true
-        }
-      },
-      {
-        "id": 6,
-        "title": "Da Tromsø: Tour dell'Aurora Boreale",
-        "meeting_point": {
-          "latitude": 69.6492,
-          "longitude": 18.956,
-          "address": "Centro di Tromsø, Norvegia"
-        },
-        "description": "Vivi lo spettacolo naturale dell'Aurora Boreale con un tour guidato alla scoperta dei migliori punti di osservazione.",
-        "price": 120,
-        "duration": "6 ore",
-        "includes": ["Guida esperta", "Bevande calde", "Trasporto"],
-        "excludes": ["Fotocamera professionale"],
-        "highlights": ["Spettacolo dell'aurora", "Fotografie mozzafiato", "Esperienza unica nei cieli artici"],
-        "gallery": ["aurora1.jpg", "aurora2.jpg", "aurora3.jpg"],
-        "featured_image": "aurora_highlight.jpg",
-        "additional_info": {
-          "best_season": "Inverno",
-          "recommended_gear": ["Vestiti termici", "Guanti"]
-        }
+      "description": "Vivi l'avventura nel deserto di Dubai con un safari in 4x4, emozionanti giri in quad e in cammello, seguiti da una serata all'Al Khayma Camp con spettacoli dal vivo e cena tradizionale.",
+      "price": 100,
+      "duration": "6 ore",
+      "includes": [
+        "Trasporto in 4x4",
+        "Quad bike",
+        "Cena BBQ",
+        "Spettacoli di danza"
+      ],
+      "excludes": ["Bevande alcoliche"],
+      "highlights": [
+        "Quad bike sulle dune",
+        "Giro in cammello",
+        "Cena e spettacoli all'Al Khayma Camp"
+      ],
+      "gallery": ["desert1.jpg", "desert2.jpg", "desert3.jpg"],
+      "featured_image": "desert_highlight.jpg",
+      "additional_info": {
+        "group_size": "Max 15 persone",
+        "recommended_gear": ["Abiti comodi", "Occhiali da sole"]
       }
-    ]
+    },
+    {
+      "id": 2,
+      "title": "Cappadocia: Volo in mongolfiera a Goreme all'alba",
+      "meeting_point": {
+        "latitude": 38.6431,
+        "longitude": 34.8265,
+        "address": "Göreme, Cappadocia, Turchia"
+      },
+      "description": "Un magico volo in mongolfiera sopra i paesaggi unici della Cappadocia all'alba, con una vista spettacolare su camini delle fate e vallate.",
+      "price": 150,
+      "duration": "1 ora (volo) + 1 ora trasferimento",
+      "includes": [
+        "Volo in mongolfiera",
+        "Certificato di volo",
+        "Colazione leggera"
+      ],
+      "excludes": ["Trasporto fino al meeting point"],
+      "highlights": [
+        "Volo panoramico all'alba",
+        "Vista sulle valli e i camini delle fate",
+        "Esperienza unica in Turchia"
+      ],
+      "gallery": ["cappadocia1.jpg", "cappadocia2.jpg", "cappadocia3.jpg"],
+      "featured_image": "cappadocia_highlight.jpg",
+      "additional_info": {
+        "age_restriction": "6+",
+        "meeting_time": "Prima dell'alba"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Dubai: I souk della vecchia Dubai, il giro in abra e il tour gastronomico",
+      "meeting_point": {
+        "latitude": 25.2644,
+        "longitude": 55.3017,
+        "address": "Al Fahidi Historical District, Dubai, Emirati Arabi Uniti"
+      },
+      "description": "Un'immersione nei mercati tradizionali di Dubai con degustazioni di cibo locale e un giro sul tradizionale taxi acquatico abra.",
+      "price": 55,
+      "duration": "3 ore",
+      "includes": [
+        "Guida locale",
+        "Giro in abra",
+        "Degustazioni di cibi locali"
+      ],
+      "excludes": ["Spese personali nei souk"],
+      "highlights": [
+        "Visita al Gold Souk",
+        "Giro in abra",
+        "Assaggi di piatti tradizionali"
+      ],
+      "gallery": ["dubai_souk1.jpg", "dubai_souk2.jpg", "dubai_souk3.jpg"],
+      "featured_image": "dubai_souk_highlight.jpg",
+      "additional_info": {
+        "language": ["Inglese", "Arabo"],
+        "clothing_advice": "Vestirsi modestamente"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Atene: Escursione di un giorno a Capo Sounion e al Tempio di Poseidone al tramonto",
+      "meeting_point": {
+        "latitude": 37.4246,
+        "longitude": 24.0239,
+        "address": "Centro di Atene, Grecia"
+      },
+      "description": "Una suggestiva escursione a Capo Sounion con visita al Tempio di Poseidone e vista spettacolare al tramonto.",
+      "price": 70,
+      "duration": "5 ore",
+      "includes": ["Trasporto da Atene", "Guida turistica", "Ingresso al sito"],
+      "excludes": ["Pasti e bevande"],
+      "highlights": [
+        "Tramonto sul Mar Egeo",
+        "Visita al Tempio di Poseidone",
+        "Fotografia scenografica"
+      ],
+      "gallery": [
+        "capo_sounion1.jpg",
+        "capo_sounion2.jpg",
+        "capo_sounion3.jpg"
+      ],
+      "featured_image": "capo_sounion_highlight.jpg",
+      "additional_info": {
+        "meeting_time": "Pomeriggio",
+        "recommended_items": ["Macchina fotografica", "Scarpe comode"]
+      }
+    },
+    {
+      "id": 5,
+      "title": "Marrakech: Tour guidato a piedi dei souk della Medina",
+      "meeting_point": {
+        "latitude": 31.6295,
+        "longitude": -7.9811,
+        "address": "Piazza Jemaa el-Fnaa, Marrakech, Marocco"
+      },
+      "description": "Scopri i colori, i profumi e i sapori dei souk di Marrakech in una passeggiata guidata all'interno della Medina.",
+      "price": 40,
+      "duration": "3 ore",
+      "includes": ["Guida locale", "Assaggi di tè alla menta"],
+      "excludes": ["Acquisti nei souk"],
+      "highlights": [
+        "Esplora i mercati della Medina",
+        "Conosci le tradizioni locali",
+        "Scopri i prodotti tipici marocchini"
+      ],
+      "gallery": ["medina1.jpg", "medina2.jpg", "medina3.jpg"],
+      "featured_image": "medina_highlight.jpg",
+      "additional_info": {
+        "clothing_advice": "Abbigliamento modesto consigliato",
+        "family_friendly": true
+      }
+    },
+    {
+      "id": 6,
+      "title": "Da Tromsø: Tour dell'Aurora Boreale",
+      "meeting_point": {
+        "latitude": 69.6492,
+        "longitude": 18.956,
+        "address": "Centro di Tromsø, Norvegia"
+      },
+      "description": "Vivi lo spettacolo naturale dell'Aurora Boreale con un tour guidato alla scoperta dei migliori punti di osservazione.",
+      "price": 120,
+      "duration": "6 ore",
+      "includes": ["Guida esperta", "Bevande calde", "Trasporto"],
+      "excludes": ["Fotocamera professionale"],
+      "highlights": [
+        "Spettacolo dell'aurora",
+        "Fotografie mozzafiato",
+        "Esperienza unica nei cieli artici"
+      ],
+      "gallery": ["aurora1.jpg", "aurora2.jpg", "aurora3.jpg"],
+      "featured_image": "aurora_highlight.jpg",
+      "additional_info": {
+        "best_season": "Inverno",
+        "recommended_gear": ["Vestiti termici", "Guanti"]
+      }
     }
+  ]
+}
