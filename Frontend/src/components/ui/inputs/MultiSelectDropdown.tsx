@@ -1,0 +1,88 @@
+import { useEffect, useState } from "react";
+
+interface Option {
+    _id: string;
+    title: string;
+    __v: number;
+}
+
+interface MultiSelectDropdownProps {
+    formFieldName: string,
+    options: Option[],
+}
+
+const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ formFieldName, options }) => {
+    const [newInclude, setNewInclude] = useState('')
+
+    async function addNewIncludes() {
+        try {
+            const response = await fetch("http://localhost:3030/tours/includes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    title: newInclude
+                }),
+            });
+            console.log()
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        } catch (error) {
+            console.error("Errore durante la creazione dell'include:", error);
+        }
+    }
+
+    useEffect(() => {
+        console.log(options)
+    }, [options])
+
+    return (
+
+        <label className="relative">
+            <input type="checkbox" className="hidden peer" />
+
+            <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border rounded px-5 py-2 w-full">
+                <span className="ml-1 text-blue-500">{`(11 selected)`}</span>
+
+            </div>
+
+            <div className="absolute p-4 bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 overflow-y-scroll">
+                <input
+                    name="newIncludes"
+                    type="text"
+                    className="block rounded-full mb-4 w-full border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E29C00] sm:text-sm/6"
+                    onChange={(e) => setNewInclude(e.target.value)}
+                />
+                <button
+                    className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
+                    onClick={addNewIncludes}
+                >Aggiungi Nuovo</button>
+                <ul>
+                    {options.map((option) => {
+                        return (
+                            <li key={option['_id']}>
+                                <label
+                                    className={`flex whitespace-nowrap cursor-pointer px-2 py-1 transition-colors hover:bg-blue-100 [&:has(input:checked)]:bg-blue-200`}
+                                >
+                                    <input
+                                        type="checkbox"
+                                        name={formFieldName}
+                                        value={option.title}
+                                        className="cursor-pointer"
+                                    />
+                                    <span className="ml-1">{option.title}</span>
+                                </label>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        </label >
+    );
+}
+
+export default MultiSelectDropdown
