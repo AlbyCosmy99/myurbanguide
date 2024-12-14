@@ -1,20 +1,17 @@
 import './App.css';
 import NavBar from './components/navigation/navBar/NavBar';
 import Footer from './components/footer/Footer';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import ScrollToTop from "./utils/ScrollToTop";
 import { useEffect } from "react";
 import useAuthStore from "./stores/zustand/AuthStore";
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
+import User from "./types/User";
 
-// Estendi il tipo JwtPayload
-interface CustomJwtPayload extends JwtPayload {
-  name: string;
-  email: string;
-}
 
 function App() {
-  const { setIsLoggedIn, updateUsername, updateEmail } = useAuthStore()
+  const navigate = useNavigate()
+  const { updateUser } = useAuthStore()
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -27,26 +24,25 @@ function App() {
       })
         .then(res => {
           if (!res.ok) {
-            throw new Error(`HTTP status ${res.status}`);
+            localStorage.removeItem('token')
+            updateUser(null)
+          } else {
+            const user = jwtDecode<User>(token);
+            updateUser(user)
+            navigate('/dashboard')
           }
         })
-        .then(() => {
-          const user = jwtDecode<CustomJwtPayload>(token);
-          updateUsername(user.name)
-          updateEmail(user.email)
-          setIsLoggedIn(true)
-        })
-        .catch(error => {
-          console.log(error)
-          setIsLoggedIn(false)
+        .catch(() => {
+          localStorage.removeItem('token')
+          updateUser(null)
         })
     }
     else {
-      console.log('token non presente o scaduto')
-      setIsLoggedIn(false)
+      localStorage.removeItem('token')
+      updateUser(null)
+
     }
   }, [])
-
 
   return (
     <>

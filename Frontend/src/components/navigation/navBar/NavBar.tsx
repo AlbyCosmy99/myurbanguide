@@ -51,7 +51,7 @@ const callsToAction = [
 
 const NavBar = () => {
   const { toggleModal } = useModalStore();
-  const { isLoggedIn } = useAuthStore();
+  const { user } = useAuthStore();
 
   return (
     <div className=" w-full bg-white shadow-sm">
@@ -130,7 +130,7 @@ const NavBar = () => {
             <SearchBar />
 
             {
-              !isLoggedIn ?
+              !user ?
                 <div onClick={toggleModal} className="flex flex-col items-center">
                   <RiUserSmileLine size="1.6rem" className="text-gray-700" />
                   <small className="text-gray-900">Accedi</small>

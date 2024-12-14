@@ -3,7 +3,6 @@ import { FcGoogle } from 'react-icons/fc';
 import OauthButton from "../ui/buttons/OauthButton";
 import { useState } from "react";
 import LoadingIcon from "../ui/customIcons/Loading";
-import useAuthStore from "../../stores/zustand/AuthStore";
 import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
 
@@ -20,7 +19,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
   const [errorMessage, setErrorMessage] = useState<String>('')
   const [loading, setLoading] = useState<Boolean>(false)
 
-  const { setIsLoggedIn } = useAuthStore()
   const { setModalOpen } = useModalStore()
 
   const navigate = useNavigate()
@@ -51,22 +49,22 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json(); // Converte la risposta in JSON
-        console.log(data);
+        const token = await response.json()
+        localStorage.setItem('token', token)
+
+        if (token) {
+          navigate('/dashboard')
+        }
 
         setErrorMessage('')
         setLoading(false)
-        setIsLoggedIn(true)
         setModalOpen(false)
-        localStorage.setItem('token', data)
-        navigate('/dashboard')
       }
       catch (error) {
         setErrorMessage('Utente già registrato')
         setLoading(false)
       }
     }
-
   }
 
 

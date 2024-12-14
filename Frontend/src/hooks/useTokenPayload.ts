@@ -1,14 +1,11 @@
-import { useEffect } from "react"
-import SectionContainer from "../components/SectionContainer"
-import useAuthStore from "../stores/zustand/AuthStore"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 import User from "../types/User"
 import { jwtDecode } from "jwt-decode"
+import useAuthStore from "../stores/zustand/AuthStore"
 
-const DashBoard = () => {
-    const { user, updateUser } = useAuthStore()
-
-    const navigate = useNavigate()
+const useTokenPayload = () => {
+    const { updateUser } = useAuthStore()
+    const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -23,33 +20,29 @@ const DashBoard = () => {
                     if (!res.ok) {
                         localStorage.removeItem('token')
                         updateUser(null)
-                        navigate('/')
+                        setUser(null)
                     } else {
                         const user = jwtDecode<User>(token);
                         updateUser(user)
+                        setUser(null)
+
                     }
                 })
                 .catch(() => {
                     localStorage.removeItem('token')
                     updateUser(null)
-                    navigate('/')
+                    setUser(null)
+
                 })
         }
         else {
             localStorage.removeItem('token')
             updateUser(null)
-            navigate('/')
+
         }
     }, [])
 
-
-    return (
-        <SectionContainer>
-            <h2 className="text-3xl font-bold pb-8 text-[#E29C00]">{`Benvenuto, ${user?.name}`}</h2>
-            <p>{user?.email}</p>
-        </SectionContainer>
-
-    )
+    return user
 }
 
-export default DashBoard
+export default useTokenPayload

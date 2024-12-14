@@ -5,7 +5,6 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import OauthButton from "../ui/buttons/OauthButton";
 import LoadingIcon from "../ui/customIcons/Loading";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../stores/zustand/AuthStore";
 import useModalStore from "../../stores/zustand/ModalStore";
 
 interface LoginFormProps {
@@ -19,7 +18,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
   const [errorMessage, setErrorMessage] = useState<String>('')
   const [loading, setLoading] = useState<Boolean>(false)
 
-  const { setIsLoggedIn, updateUsername, updateEmail } = useAuthStore()
   const { setModalOpen } = useModalStore()
 
   const navigate = useNavigate();
@@ -48,19 +46,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json(); // Converte la risposta in JSON
-      localStorage.setItem('token', data)
-      console.log(data);
+      const token = await response.json()
+      localStorage.setItem('token', token)
+
+      if (token) {
+        navigate('/dashboard')
+      }
 
       setErrorMessage('')
       setLoading(false)
-      setIsLoggedIn(true)
       setModalOpen(false)
-      updateUsername(data.name)
-      updateEmail(data.email)
-
-      navigate('/dashboard')
-
     }
     catch (error) {
       setErrorMessage('Credenziali errate')
@@ -80,7 +75,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={loginUser} method="POST" className="space-y-4">
+          <form onSubmit={loginUser} className="space-y-4">
             <div>
               <label
                 htmlFor="email"

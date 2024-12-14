@@ -1,18 +1,15 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import User from "../../types/User";
 
 type AuthStoreState = {
     isLoggedIn: boolean;
-    user: {
-        username: string;
-        email: string;
-    } | null
+    user: User | null
 };
 
 type AuthStoreAction = {
     setIsLoggedIn: (isLoggedIn: AuthStoreState['isLoggedIn']) => void;
-    updateUsername: (username: string) => void;
-    updateEmail: (email: string) => void;
+    updateUser: (user: User | null) => void;
 }
 
 const useAuthStore = create<AuthStoreState & AuthStoreAction>(
@@ -20,11 +17,9 @@ const useAuthStore = create<AuthStoreState & AuthStoreAction>(
         //@ts-ignore
         set => ({
             isLoggedIn: false,
-            user: {
-                username: '',
-                email: ''
-            },
+            user: null,
             setIsLoggedIn: (isLoggedIn: boolean) => set(({ isLoggedIn })),
+            updateUser: (user: User | null) => set({ user }),
             updateUsername: (username: String) => set((state: AuthStoreState) => ({ user: { ...state.user, username } })),
             updateEmail: (email: String) => set((state: AuthStoreState) => ({ user: { ...state.user, email } })),
         }),
