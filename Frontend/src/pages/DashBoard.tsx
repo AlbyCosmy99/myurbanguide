@@ -1,53 +1,73 @@
-import { useEffect } from "react"
 import SectionContainer from "../components/SectionContainer"
 import useAuthStore from "../stores/zustand/AuthStore"
+import useTokenPayload from "../hooks/useTokenPayload"
 import { useNavigate } from "react-router-dom"
-import User from "../types/User"
-import { jwtDecode } from "jwt-decode"
+import { useEffect, useState } from "react"
+import Tour from "../types/Tour"
+import HeadersDashboard from "../components/navigation/Headings"
 
 const DashBoard = () => {
     const { user, updateUser } = useAuthStore()
+    const [userTours, setUserTours] = useState<Tour[]>([])
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            fetch('http://localhost:3030/users/token/check', {
-                method: 'post',
-                headers: {
-                    authorization: 'Bearer ' + token
-                }
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        localStorage.removeItem('token')
-                        updateUser(null)
-                        navigate('/')
-                    } else {
-                        const user = jwtDecode<User>(token);
-                        updateUser(user)
-                    }
-                })
-                .catch(() => {
-                    localStorage.removeItem('token')
-                    updateUser(null)
-                    navigate('/')
-                })
-        }
-        else {
-            localStorage.removeItem('token')
-            updateUser(null)
-            navigate('/')
-        }
-    }, [])
+    useTokenPayload()
 
+    const logoutUser = () => {
+        localStorage.removeItem('token')
+        updateUser(null)
+        navigate('/')
+    }
+
+    useEffect(() => {
+        const fetchTours = async () => {
+            if (user) {
+                try {
+                    const url = 'http://localhost:3030/tours/user/' + user.id;
+                    const res = await fetch(url);
+
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+                    const userTours = await res.json();
+                    setUserTours(userTours);
+                } catch (error) {
+                    console.error('Errore nella richiesta dei dati:', error);
+                }
+            }
+        };
+
+        fetchTours();
+    }, [user]);
 
     return (
-        <SectionContainer>
-            <h2 className="text-3xl font-bold pb-8 text-[#E29C00]">{`Benvenuto, ${user?.name}`}</h2>
-            <p>{user?.email}</p>
-        </SectionContainer>
+        <>
+            <SectionContainer>
+                <HeadersDashboard />
+            </SectionContainer>
+
+            <SectionContainer>
+                <h2 className="text-3xl font-bold pb-8 text-[#E29C00]">{`Benvenuto, ${user?.name}`}</h2>
+                <p>{user?.email}</p>
+                <a
+                    onClick={logoutUser}
+                    className="font-semibold text-[#E29C00] hover:text-[#E29C00] cursor-pointer"
+                >
+                    Esegui il logout
+                </a>
+                <h1>Tour Inseriti</h1>
+                {
+                    userTours.length > 0 ?
+                        userTours.map(userTour => {
+                            return <div key={userTour._id}>
+                                <p>{userTour.title}</p>
+                            </div>
+                        })
+                        : ""
+                }
+            </SectionContainer>
+        </>
 
     )
 }

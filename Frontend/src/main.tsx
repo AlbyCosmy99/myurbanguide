@@ -8,10 +8,10 @@ import { ThemeProvider } from '@material-tailwind/react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NewTour from "./pages/NewTour.tsx";
-import DashBoard from "./pages/DashBoard.tsx";
 
 const Home = lazy(() => import('./pages/home/Home.tsx'))
 const Tours = lazy(() => import("./pages/Tours.tsx"))
+const DashBoard = lazy(() => import("./pages/DashBoard.tsx"))
 
 const router = createBrowserRouter([
   {
@@ -31,13 +31,13 @@ const router = createBrowserRouter([
         element: <TourSingle />,
       },
       {
-        path: '/new-tour/',
-        element: <NewTour />,
+        path: '/dashboard',
+        element: <Suspense fallback={<div>loading</div>}><DashBoard /></Suspense>,
       },
       {
-        path: '/dashboard',
-        element: <DashBoard />
-      }
+        path: '/dashboard/new-tour/',
+        element: <NewTour />,
+      },
     ],
   },
 ]);

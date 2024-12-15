@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 type ModalStoreState = {
   modalOpen: boolean;
@@ -11,15 +10,12 @@ type ModalStoreAction = {
 }
 
 const useModalStore = create<ModalStoreState & ModalStoreAction>(
-  (persist as any)(
-    //@ts-ignore
-    set => ({
-      modalOpen: true,
-      toggleModal: () => set((state: any) => ({ modalOpen: !state.modalOpen })),
-      setModalOpen: (modalOpen: boolean) => set(() => ({ modalOpen: modalOpen })),
-    }),
-    { name: 'modalStore' },
-  ),
+  //@ts-ignore
+  set => ({
+    modalOpen: false,
+    toggleModal: () => set((state: any) => ({ modalOpen: !state.modalOpen })),
+    setModalOpen: (modalOpen: boolean) => set(() => ({ modalOpen: modalOpen })),
+  })
 );
 
 export default useModalStore;

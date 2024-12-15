@@ -4,34 +4,33 @@ import { IncludesModel } from "./includesSchema.js";
 
 
 const tourSchema = mongoose.Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+    },
     title: {
         type: String,
         required: true
     },
     meeting_point: {
         latitude: {
-            type: Number,
-            required: true
+            type: Number
         },
         longitude: {
-            type: Number,
-            required: true
+            type: Number
         },
         address: {
-            type: String,
-            required: true
+            type: String
         }
     },
     description: {
         type: String
     },
     price: {
-        type: Number,
-        required: true
+        type: Number
     },
     duration: {
-        type: String,
-        required: true,
+        type: String
     },
     includes: {
         type: [{ type: Schema.Types.ObjectId, ref: 'includes' }],

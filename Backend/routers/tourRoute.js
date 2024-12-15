@@ -3,12 +3,14 @@ import { TourModel } from "../database/schemas/tourSchema.js"
 import includesRoute from "./includesRoute.js"
 import excludesRoute from "./excludesRoute.js"
 import languagesRoute from "./languagesRoute.js"
+import userToursRoute from "./userTourRouter.js"
 
 const tourRoute = express.Router()
 
 tourRoute.use('/includes', includesRoute)
 tourRoute.use('/excludes', excludesRoute)
 tourRoute.use('/languages', languagesRoute)
+tourRoute.use('/user', userToursRoute)
 
 tourRoute.get('/', async (req, res) => {
     return res.status(200).json(
