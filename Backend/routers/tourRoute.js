@@ -24,6 +24,22 @@ tourRoute.get('/:id', async (req, res) => {
     )
 })
 
+tourRoute.delete('/:id', async (req, res) => {
+    try {
+        const deletedItem = await TourModel.findByIdAndDelete(req.params.id)
+        if (!deletedItem) {
+            return res.status(404).json({
+                message: "Tour not found"
+            })
+        }
+        return res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({
+            message: "server error"
+        })
+    }
+})
+
 tourRoute.post("/", async (req, res) => {
     try {
         const newTour = new TourModel(req.body)

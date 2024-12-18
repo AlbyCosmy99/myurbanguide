@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface CardProps {
-  id: number;
+  id: string;
   toursLoading: boolean;
   title: string;
   price: number;

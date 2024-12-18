@@ -65,4 +65,31 @@ authRouter.post('/token/check', tokenAuth, async (req, res) => {
     }
 })
 
+const clientId = '452269264051-km55c7daqfisomksgql2u94g954uf3ma.apps.googleusercontent.com'
+const url = 'http://localhost:3030/users/google/callback'
+const clientSecret = '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'
+
+authRouter.get('/google', (req, res) => {
+
+    const redirectUri = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${url}&response_type=code&scope= email profile`
+    res.redirect(redirectUri)
+})
+
+authRouter.get('/google/callback', async (req, res) => {
+    const body = {
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: 'authorization_code',
+        redirect_uri: url,
+        code: req.query.code
+    }
+
+    const token = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        body: JSON.stringify(body)
+    })
+    const response = await token.json()
+    res.redirect('http://localhost:5173/success?token=' + response.id_token)
+})
+
 export default authRouter

@@ -1,84 +1,48 @@
-import { useEffect } from "react"
-import User from "../types/User"
-import { jwtDecode } from "jwt-decode"
-import useAuthStore from "../stores/zustand/AuthStore"
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react";
+import User from "../types/User";
+import { jwtDecode } from "jwt-decode"; // Correggi l'importazione
+import useAuthStore from "../stores/zustand/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 const useTokenPayload = () => {
-    const { updateUser } = useAuthStore()
-
-    const navigate = useNavigate()
-
-    /*
-    useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            fetch('http://localhost:3030/users/token/check', {
-                method: 'post',
-                headers: {
-                    authorization: 'Bearer ' + token
-                }
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        localStorage.removeItem('token')
-                        updateUser(null)
-                        setUser(null)
-                    } else {
-                        const user = jwtDecode<User>(token);
-                        updateUser(user)
-                        setUser(null)
-
-                    }
-                })
-                .catch(() => {
-                    localStorage.removeItem('token')
-                    updateUser(null)
-                    setUser(null)
-
-                })
-        }
-        else {
-            localStorage.removeItem('token')
-            updateUser(null)
-
-        }
-    }, [])
-
-    return user
-    */
+    const { updateUser } = useAuthStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            fetch('http://localhost:3030/users/token/check', {
-                method: 'post',
-                headers: {
-                    authorization: 'Bearer ' + token
-                }
-            })
-                .then(res => {
-                    if (!res.ok) {
-                        localStorage.removeItem('token')
-                        updateUser(null)
-                        navigate('/')
-                    } else {
-                        const user = jwtDecode<User>(token);
-                        updateUser(user)
-                    }
-                })
-                .catch(() => {
-                    localStorage.removeItem('token')
-                    updateUser(null)
-                    navigate('/')
-                })
-        }
-        else {
-            localStorage.removeItem('token')
-            updateUser(null)
-            navigate('/')
-        }
-    }, [])
-}
+        const checkToken = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                // Nessun token, reset e redirect
+                localStorage.removeItem("token");
+                updateUser(null);
+                navigate("/");
+                return;
+            }
 
-export default useTokenPayload
+            try {
+                const res = await fetch("http://localhost:3030/users/token/check", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) {
+                    throw new Error("Token non valido");
+                }
+
+                const user = jwtDecode<User>(token);
+                updateUser(user);
+            } catch (error) {
+                console.error("Errore durante la verifica del token:", error);
+                localStorage.removeItem("token");
+                updateUser(null);
+                navigate("/");
+            }
+        };
+
+        checkToken();
+    }, [navigate, updateUser]);
+};
+
+export default useTokenPayload;

@@ -143,9 +143,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   className="absolute top-[10px] left-4"
                 >
                   {type === 'password' ? (
-                    <FaRegEye size={20} />
+                    <FaRegEye size={20} className="text-gray-400" />
                   ) : (
-                    <FaRegEyeSlash size={20} />
+                    <FaRegEyeSlash size={20} className="text-gray-400" />
                   )}
                 </div>
               </div>
@@ -175,9 +175,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   className="absolute top-[10px] left-4"
                 >
                   {type === 'password' ? (
-                    <FaRegEye size={20} />
+                    <FaRegEye size={20} className="text-gray-400" />
                   ) : (
-                    <FaRegEyeSlash size={20} />
+                    <FaRegEyeSlash size={20} className="text-gray-400" />
                   )}
                 </div>
               </div>

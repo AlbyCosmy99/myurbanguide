@@ -12,7 +12,18 @@ const port = 3030
 const username = encodeURIComponent(process.env.USR_DB)
 const password = encodeURIComponent(process.env.PSW_DB)
 
-server.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:5173', // Specifica l'origine front-end
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Metodi permessi
+    allowedHeaders: ['Content-Type', 'Authorization'], // Header permessi
+    credentials: true, // Permette di inviare cookie se necessario
+};
+
+// Middleware CORS
+server.use(cors(corsOptions));
+
+// Middleware per richieste preflight
+server.options('*', cors(corsOptions));
 
 server.use(express.json())
 

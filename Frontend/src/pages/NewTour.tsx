@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import MultiSelectDropdown from "../components/ui/inputs/MultiSelectDropdown";
 import useAuthStore from "../stores/zustand/AuthStore";
+import SectionContainer from "../components/SectionContainer";
+import HeadersDashboard from "../components/navigation/Headings";
+import { useNavigate } from "react-router-dom";
 
 const NewTour = () => {
     const [tourTitle, setTourTitle] = useState<String>('')
     const [includesList, setIncludesList] = useState([])
 
     const { user } = useAuthStore()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const getIncludesListing = async () => {
@@ -39,7 +44,9 @@ const NewTour = () => {
                         user: user.id,
                         title: tourTitle
                     })
-                })
+                });
+
+                navigate('/dashboard')
 
             } catch (error) {
                 console.log(error)
@@ -50,32 +57,33 @@ const NewTour = () => {
         }
     }
 
-    return (
-        <>
-            <main className="w-full max-w-xl mx-auto">
-
-                <form onSubmit={createNewForm} className="mt-5 w-full">
-                    <input
-                        name="tour-title"
-                        type="text"
-                        required
-                        className="input-style"
-                        onChange={(event) => setTourTitle(event.target.value)}
-                    />
-                    {/* <div>
+    if (user) {
+        return (
+            <>
+                <SectionContainer>
+                    <form onSubmit={createNewForm} className="mt-5 w-[400px]">
+                        <input
+                            name="tour-title"
+                            type="text"
+                            required
+                            className="input-style"
+                            onChange={(event) => setTourTitle(event.target.value)}
+                        />
+                        {/* <div>
                         <MultiSelectDropdown
                             formFieldName={"includes"}
                             options={includesList}
                         />
                     </div> */}
-                    <input
-                        type="submit"
-                        className="bg-blue-500 text-white rounded px-5 py-2 mt-5 cursor-pointer"
-                    />
-                </form>
-            </main>
-        </>
-    );
+                        <input
+                            type="submit"
+                            className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold w-full flex justify-center items-center gap-3 mt-3"
+                        />
+                    </form>
+                </SectionContainer>
+            </>
+        )
+    };
 }
 
 export default NewTour;

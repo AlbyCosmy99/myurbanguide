@@ -1,38 +1,46 @@
 import {
-    BriefcaseIcon,
-    CalendarIcon,
-    CheckIcon,
     ChevronDownIcon,
-    CurrencyDollarIcon,
     LinkIcon,
-    MapPinIcon,
     PencilIcon,
 } from '@heroicons/react/20/solid'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { MdTour, MdAlternateEmail } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 
-export default function HeadersDashboard() {
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import useAuthStore from "../../stores/zustand/AuthStore";
+import { Link, useNavigate } from "react-router-dom";
+
+interface HeadersDashboardProps {
+    username: string;
+    userEmail: string;
+    userTourLength: number;
+}
+
+const HeadersDashboard: React.FC<HeadersDashboardProps> = ({ username, userEmail, userTourLength }) => {
+    const { updateUser } = useAuthStore()
+
+    const navigate = useNavigate()
+
+    const logoutUser = () => {
+        localStorage.removeItem('token')
+        updateUser(null)
+        navigate('/')
+    }
+
     return (
         <div className="lg:flex lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1">
-                <h2 className="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    Back End Developer
+                <h2 className="text-2xl/7 font-bold text-gray-800 sm:truncate sm:text-3xl sm:tracking-tight">
+                    Benvenuto, {username}
                 </h2>
                 <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                     <div className="mt-2 flex items-center text-sm text-gray-500">
-                        <BriefcaseIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
-                        Full-time
+                        <MdAlternateEmail aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
+                        {userEmail}
                     </div>
                     <div className="mt-2 flex items-center text-sm text-gray-500">
-                        <MapPinIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
-                        Remote
-                    </div>
-                    <div className="mt-2 flex items-center text-sm text-gray-500">
-                        <CurrencyDollarIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
-                        $120k &ndash; $140k
-                    </div>
-                    <div className="mt-2 flex items-center text-sm text-gray-500">
-                        <CalendarIcon aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
-                        Closing on January 9, 2020
+                        <MdTour aria-hidden="true" className="mr-1.5 size-5 shrink-0 text-gray-400" />
+                        Tour inseriti: {userTourLength}
                     </div>
                 </div>
             </div>
@@ -40,31 +48,34 @@ export default function HeadersDashboard() {
                 <span className="hidden sm:block">
                     <button
                         type="button"
-                        className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        className="inline-flex items-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
-                        <PencilIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5 text-gray-400" />
-                        Edit
+                        <PencilIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-4 text-gray-400" />
+                        Modifica profilo
                     </button>
                 </span>
 
                 <span className="ml-3 hidden sm:block">
                     <button
+                        onClick={logoutUser}
                         type="button"
-                        className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        className="inline-flex items-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     >
-                        <LinkIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5 text-gray-400" />
-                        View
+                        <LinkIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-4 text-gray-400" />
+                        Logout
                     </button>
                 </span>
 
                 <span className="sm:ml-3">
-                    <button
-                        type="button"
-                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        <CheckIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5" />
-                        Publish
-                    </button>
+                    <Link to="/dashboard/nuovo-tour/">
+                        <button
+                            type="button"
+                            className="inline-flex items-center rounded-full bg-[#E29C00] px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                        >
+                            <FaPlus aria-hidden="true" className="-ml-0.5 mr-1.5 size-4" />
+                            Aggiungi Tour
+                        </button>
+                    </Link>
                 </span>
 
                 {/* Dropdown */}
@@ -100,3 +111,5 @@ export default function HeadersDashboard() {
         </div>
     )
 }
+
+export default HeadersDashboard;

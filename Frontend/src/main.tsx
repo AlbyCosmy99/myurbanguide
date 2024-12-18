@@ -8,6 +8,8 @@ import { ThemeProvider } from '@material-tailwind/react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NewTour from "./pages/NewTour.tsx";
+import DashboardBody from "./components/navigation/DashboardBody.tsx";
+import SuccessAuth from "./pages/SuccessAuth.tsx";
 
 const Home = lazy(() => import('./pages/home/Home.tsx'))
 const Tours = lazy(() => import("./pages/Tours.tsx"))
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
         element: <Suspense fallback={<div>loading</div>}><Home /></Suspense>,
       },
       {
+        path: '/success',
+        element: <SuccessAuth />
+      },
+      {
         path: '/tours/',
         element: <Tours />,
       },
@@ -33,10 +39,16 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Suspense fallback={<div>loading</div>}><DashBoard /></Suspense>,
-      },
-      {
-        path: '/dashboard/new-tour/',
-        element: <NewTour />,
+        children: [
+          {
+            path: '',
+            element: <DashboardBody />
+          },
+          {
+            path: 'nuovo-tour',
+            element: <NewTour />
+          },
+        ]
       },
     ],
   },

@@ -43,26 +43,32 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        setErrorMessage('Credenziali errate')
+        setLoading(false)
+      }
+      else {
+        const token = await response.json()
+        localStorage.setItem('token', token)
+
+        if (token) {
+          navigate('/dashboard')
+          setErrorMessage('')
+          setLoading(false)
+          setModalOpen(false)
+        }
       }
 
-      const token = await response.json()
-      localStorage.setItem('token', token)
-
-      if (token) {
-        navigate('/dashboard')
-      }
-
-      setErrorMessage('')
-      setLoading(false)
-      setModalOpen(false)
     }
     catch (error) {
-      setErrorMessage('Credenziali errate')
+      setErrorMessage('Non è stato possibile effettuare l\'accesso')
       setLoading(false)
     }
 
 
+  }
+
+  const handleGoogleAuth = () => {
+    window.location.href = 'http://localhost:3030/users/google'
   }
 
   return (
@@ -128,9 +134,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
                   className="absolute top-[10px] left-4"
                 >
                   {type === 'password' ? (
-                    <FaRegEye size={20} />
+                    <FaRegEye size={20} className="text-gray-400" />
                   ) : (
-                    <FaRegEyeSlash size={20} />
+                    <FaRegEyeSlash size={20} className="text-gray-400" />
                   )}
                 </div>
               </div>
@@ -157,13 +163,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
             </a>
           </p>
           <div className="mt-6">
-            <OauthButton>
+            <OauthButton onClick={handleGoogleAuth} >
               <FcGoogle />
               Accedi con Google
             </OauthButton>
           </div>
           <div className="mt-1">
-            <OauthButton>
+            <OauthButton onClick={() => { }}>
               <FaApple />
               Accedi con Apple
             </OauthButton>
