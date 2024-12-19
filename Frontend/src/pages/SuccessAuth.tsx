@@ -10,9 +10,9 @@ const SuccessAuth = () => {
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token)
-            navigate('/dashboard')
+            //navigate('/dashboard')
         } else {
-            navigate('/')
+            //navigate('/')
         }
     }, [])
 

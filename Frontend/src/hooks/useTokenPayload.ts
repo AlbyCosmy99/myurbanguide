@@ -21,6 +21,7 @@ const useTokenPayload = () => {
 
             try {
                 const res = await fetch("http://localhost:3030/users/token/check", {
+                    mode: 'no-cors',
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,

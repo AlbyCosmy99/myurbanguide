@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import MultiSelectDropdown from "../components/ui/inputs/MultiSelectDropdown";
+import { useState } from "react";
+//import MultiSelectDropdown from "../components/ui/inputs/MultiSelectDropdown";
 import useAuthStore from "../stores/zustand/AuthStore";
 import SectionContainer from "../components/SectionContainer";
-import HeadersDashboard from "../components/navigation/Headings";
 import { useNavigate } from "react-router-dom";
 
 const NewTour = () => {
     const [tourTitle, setTourTitle] = useState<String>('')
-    const [includesList, setIncludesList] = useState([])
+    //const [includesList, setIncludesList] = useState([])
 
     const { user } = useAuthStore()
 
     const navigate = useNavigate()
 
+    /*
     useEffect(() => {
         const getIncludesListing = async () => {
             const res = await fetch('http://localhost:3030/tours/includes/default')
@@ -26,12 +26,9 @@ const NewTour = () => {
 
         getIncludesListing()
     }, [])
+    */
 
-    useEffect(() => {
-        console.log(user)
-    }, [])
-
-    const createNewForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    const createNewTour = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (user) {
             try {
@@ -61,7 +58,7 @@ const NewTour = () => {
         return (
             <>
                 <SectionContainer>
-                    <form onSubmit={createNewForm} className="mt-5 w-[400px]">
+                    <form onSubmit={createNewTour} className="mt-5 w-[400px]">
                         <input
                             name="tour-title"
                             type="text"
