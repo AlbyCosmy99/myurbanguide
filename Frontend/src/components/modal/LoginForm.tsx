@@ -6,6 +6,7 @@ import OauthButton from "../ui/buttons/OauthButton";
 import LoadingIcon from "../ui/customIcons/Loading";
 import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
+import handleGoogleAuth from "../../utils/GoogleLogin";
 
 interface LoginFormProps {
   changeForm: () => void;
@@ -31,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
 
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:3030/users/login', {
+      const response = await fetch(process.env.BACKEND_URL + 'auth/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,10 +66,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
     }
 
 
-  }
-
-  const handleGoogleAuth = () => {
-    window.location.href = 'http://localhost:3030/users/google'
   }
 
   return (

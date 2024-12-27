@@ -1,9 +1,9 @@
 import express from 'express'
 import { IncludesModel } from "../database/schemas/includesSchema.js"
 
-const includesRoute = express.Router()
+const includesRouter = express.Router()
 
-includesRoute.post("/", async (req, res) => {
+includesRouter.post("/", async (req, res) => {
     try {
         const newIncludesTour = new IncludesModel(req.body)
         await newIncludesTour.save()
@@ -18,7 +18,7 @@ includesRoute.post("/", async (req, res) => {
     }
 })
 
-includesRoute.get('/', async (req, res) => {
+includesRouter.get('/', async (req, res) => {
     try {
         return res.status(200).json(
             await IncludesModel.find()
@@ -30,7 +30,7 @@ includesRoute.get('/', async (req, res) => {
     }
 })
 
-includesRoute.get('/default', async (req, res) => {
+includesRouter.get('/default', async (req, res) => {
     try {
         return res.status(200).json(
             await IncludesModel.find({ default: true })
@@ -42,4 +42,4 @@ includesRoute.get('/default', async (req, res) => {
     }
 })
 
-export default includesRoute
+export default includesRouter

@@ -5,6 +5,7 @@ import { useState } from "react";
 import LoadingIcon from "../ui/customIcons/Loading";
 import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
+import handleGoogleAuth from "../../utils/GoogleLogin";
 
 interface SignUpFormProps {
   changeForm: () => void;
@@ -33,7 +34,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
 
       try {
         setLoading(true)
-        const response = await fetch('http://localhost:3030/users/register', {
+        const response = await fetch(process.env.BACKEND_URL + 'auth/register', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -206,13 +207,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
             </a>
           </p>
           <div className="mt-6">
-            <OauthButton>
+            <OauthButton onClick={handleGoogleAuth}>
               <FcGoogle />
               Accedi con Google
             </OauthButton>
           </div>
           <div className="mt-1">
-            <OauthButton>
+            <OauthButton onClick={() => { }}>
               <FaApple />
               Accedi con Apple
             </OauthButton>

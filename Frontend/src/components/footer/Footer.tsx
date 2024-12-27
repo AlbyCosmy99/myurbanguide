@@ -4,7 +4,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700">
           <div>
-            <h3 className="text-lg font-semibold">Assistenza</h3>
+            <h3 className="text-lg font-semibold text-gray-800">Assistenza</h3>
             <ul className="mt-4 space-y-2">
               <li>Centro Assistenza</li>
               <li>Antidiscriminazione</li>
@@ -15,7 +15,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold">Ospitare</h3>
+            <h3 className="text-lg font-semibold text-gray-800">Ospitare</h3>
             <ul className="mt-4 space-y-2">
               <li>Inserisci un Annuncio</li>
               <li>Per gli host</li>
@@ -28,7 +28,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold">My Urban Guide</h3>
+            <h3 className="text-lg font-semibold text-gray-800">My Urban Guide</h3>
             <ul className="mt-4 space-y-2">
               <li>Newsroom</li>
               <li>Nuove funzionalità</li>

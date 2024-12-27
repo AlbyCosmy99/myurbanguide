@@ -21,7 +21,7 @@ const TourSingle = () => {
   useEffect(() => {
     const getSingleTour = async () => {
       try {
-        const url = 'http://localhost:3030/tours/' + tourId
+        const url = import.meta.env.VITE_BACKEND_URL + 'tours/' + tourId
         const res = await fetch(url);
 
         if (!res.ok) {

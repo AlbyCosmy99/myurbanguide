@@ -1,23 +1,39 @@
+import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 
-const tokenAuth = (req, res, next) => {
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+const tokenAuth = async (req, res, next) => {
     const authHeader = req?.headers?.authorization;
 
     if (authHeader && authHeader.startsWith('Bearer ')) {
-        const token = authHeader.split(' ')[1];
+        const token = authHeader.split(' ')[1]
         try {
-            const payload = jwt.verify(token, process.env.JWT_SECRET);
-            req.payload = payload;
-
-            return next();
-        } catch (error) {
-            return res.status(401).json({
-                message: 'invalid token',
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.GOOGLE_CLIENT_ID,
             });
+
+            const payload = ticket.getPayload()
+            req.payload = payload
+            return next()
+
+        } catch (googleError) {
+
+            try {
+                const payload = jwt.verify(token, process.env.JWT_SECRET)
+                req.payload = payload
+                return next()
+            } catch (jwtError) {
+                return res.status(401).json({
+                    message: 'Invalid token',
+                })
+            }
         }
     }
+
     return res.status(401).json({
-        message: 'missing or invalid token',
+        message: 'Missing or invalid token',
     });
 };
 

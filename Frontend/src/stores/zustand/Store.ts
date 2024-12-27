@@ -17,7 +17,7 @@ const useStoreTour = create<StoreTour>(
       getTour: async () => {
         try {
           set({ toursLoading: true });
-          const res = await fetch('http://localhost:3030/tours');
+          const res = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours');
 
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);

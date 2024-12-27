@@ -1,30 +1,30 @@
 import express from 'express'
 import { TourModel } from "../database/schemas/tourSchema.js"
-import includesRoute from "./includesRoute.js"
-import excludesRoute from "./excludesRoute.js"
-import languagesRoute from "./languagesRoute.js"
-import userToursRoute from "./userTourRouter.js"
+import includesRouter from "./includesRouter.js"
+import excludesRouter from "./excludesRouter.js"
+import languagesRouter from "./languagesRouter.js"
+import userToursRouter from "./userToursRouter.js"
 
-const tourRoute = express.Router()
+const tourRouter = express.Router()
 
-tourRoute.use('/includes', includesRoute)
-tourRoute.use('/excludes', excludesRoute)
-tourRoute.use('/languages', languagesRoute)
-tourRoute.use('/user', userToursRoute)
+tourRouter.use('/includes', includesRouter)
+tourRouter.use('/excludes', excludesRouter)
+tourRouter.use('/languages', languagesRouter)
+tourRouter.use('/usertours', userToursRouter)
 
-tourRoute.get('/', async (req, res) => {
+tourRouter.get('/', async (req, res) => {
     return res.status(200).json(
         await TourModel.find().populate('includes')
     )
 })
 
-tourRoute.get('/:id', async (req, res) => {
+tourRouter.get('/:id', async (req, res) => {
     res.status(200).json(
         await TourModel.findOne({ _id: req.params.id })
     )
 })
 
-tourRoute.delete('/:id', async (req, res) => {
+tourRouter.delete('/:id', async (req, res) => {
     try {
         const deletedItem = await TourModel.findByIdAndDelete(req.params.id)
         if (!deletedItem) {
@@ -40,7 +40,7 @@ tourRoute.delete('/:id', async (req, res) => {
     }
 })
 
-tourRoute.post("/", async (req, res) => {
+tourRouter.post("/", async (req, res) => {
     try {
         const newTour = new TourModel(req.body)
         await newTour.save()
@@ -55,4 +55,4 @@ tourRoute.post("/", async (req, res) => {
     }
 })
 
-export default tourRoute;
+export default tourRouter;

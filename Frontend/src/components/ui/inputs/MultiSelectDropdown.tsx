@@ -16,7 +16,7 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ formFieldName
 
     async function addNewIncludes() {
         try {
-            const response = await fetch("http://localhost:3030/tours/includes", {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/includes', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
