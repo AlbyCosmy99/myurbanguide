@@ -45,12 +45,12 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ formFieldName
         <label className="relative">
             <input type="checkbox" className="hidden peer" />
 
-            <div className="cursor-pointer after:content-['▼'] after:text-xs after:ml-1 after:inline-flex after:items-center peer-checked:after:-rotate-180 after:transition-transform inline-flex border rounded px-5 py-2 w-full">
-                <span className="ml-1 text-blue-500">{`(11 selected)`}</span>
+            <div className="input-style focus:border-b-0">
+                <span className="ml-1 text-gray-400">Seleziona inclusi o aggiungi nuovo</span>
 
             </div>
 
-            <div className="absolute p-4 bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 overflow-y-scroll">
+            <div className="absolute p-4 bg-white border transition-opacity opacity-0 pointer-events-none peer-checked:opacity-100 peer-checked:pointer-events-auto w-full max-h-60 overflow-y-scroll rounded-b-xl">
                 <input
                     name="newIncludes"
                     type="text"
@@ -58,15 +58,15 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ formFieldName
                     onChange={(e) => setNewInclude(e.target.value)}
                 />
                 <button
-                    className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
+                    className="bg-[#E29C00] py-2 px-6 mb-2 text-white rounded-full font-bold"
                     onClick={addNewIncludes}
                 >Aggiungi Nuovo</button>
-                <ul>
+                <ul className="pt-2 border-t-2 mt-2">
                     {options.map((option) => {
                         return (
                             <li key={option['_id']}>
                                 <label
-                                    className={`flex whitespace-nowrap cursor-pointer px-2 py-1 transition-colors hover:bg-blue-100 [&:has(input:checked)]:bg-blue-200`}
+                                    className={`flex whitespace-nowrap cursor-pointer px-2 py-1 rounded-xl transition-colors hover:bg-gray-100 [&:has(input:checked)]:bg-blue-200`}
                                 >
                                     <input
                                         type="checkbox"

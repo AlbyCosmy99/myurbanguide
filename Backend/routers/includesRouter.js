@@ -5,16 +5,13 @@ const includesRouter = express.Router()
 
 includesRouter.post("/", async (req, res) => {
     try {
-        const newIncludesTour = new IncludesModel(req.body)
-        await newIncludesTour.save()
-
-        return res.status(201).json(newIncludesTour)
-
+        const includes = req.body.includes
+        const createdIncludes = await IncludesModel.insertMany(
+            includes.map(title => ({ title }))
+        );
+        res.status(200).json({ includes: createdIncludes })
     } catch (error) {
-        return res.status(400).json({
-            error: "Cannot save the tour to db.",
-            details: error.message
-        })
+        res.status(500).json({ error: "Errore nel salvataggio degli includes" })
     }
 })
 

@@ -2,17 +2,17 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react"
 import SmallCard from "../cards/SmallCard"
 import SectionContainer from "../SectionContainer"
 import { TbTrash } from "react-icons/tb"
-import Tour from "../../types/Tour"
+import { Tour } from "../../types/Tour"
 import { useOutletContext } from "react-router-dom"
 import { useState } from "react"
 
 type DashboardOutletContext = {
     userTours: Tour[];
-    user: { id: string; name: string; email: string };
+    fetchTours: () => Promise<void>;
 };
 
 const DashboardBody = () => {
-    const { userTours } = useOutletContext<DashboardOutletContext>();
+    const { userTours, fetchTours } = useOutletContext<DashboardOutletContext>();
     const [tourId, setTourId] = useState<string>('')
     const [confirmationModalOpen, setConfirmationModalOpen] = useState<boolean | undefined>(false)
 
@@ -28,11 +28,12 @@ const DashboardBody = () => {
             }
 
             console.log(`Tour con ID ${tourId} eliminato con successo.`);
-            setConfirmationModalOpen(false)
+            setConfirmationModalOpen(false);
+            await fetchTours();
         } catch (error) {
             console.error('Errore nella richiesta DELETE:', error);
         }
-    }
+    };
 
     return (
         <>

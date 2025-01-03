@@ -34,7 +34,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
 
       try {
         setLoading(true)
-        const response = await fetch(process.env.BACKEND_URL + 'auth/register', {
+        const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'auth/register', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

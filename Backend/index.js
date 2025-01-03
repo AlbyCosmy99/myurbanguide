@@ -15,6 +15,8 @@ server.use(express.json())
 
 server.use('/api', apiRouter)
 
+server.use('/public', express.static('public'));
+
 const mongouri = `mongodb+srv://${username}:${password}@cluster0.rbaal.mongodb.net/myurbanguide`
 
 mongoose.connect(mongouri)

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import SectionContainer from '../components/SectionContainer';
 import { useEffect, useState } from 'react';
-import Tour from '../types/Tour';
+import { Tour, TourIncluded } from '../types/Tour';
 import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { HiViewGridAdd } from "react-icons/hi";
@@ -44,7 +44,6 @@ const TourSingle = () => {
       lat: tour ? tour.meeting_point.latitude : 0,
       lng: tour ? tour.meeting_point.longitude : 0,
     });
-    setTour(tour);
   }, [tour]);
 
 
@@ -77,7 +76,7 @@ const TourSingle = () => {
             <div key={index}>
               <img
                 className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60"
-                src={`/src/assets/img/${galleryImage}`}
+                src={import.meta.env.VITE_UPLOAD_URL + galleryImage}
                 alt=""
               />
             </div>
@@ -104,10 +103,10 @@ const TourSingle = () => {
                 </h3>
                 <ul className="space-y-2">
                   {
-                    tour.includes.map((tourIncluded, index) => (
+                    tour.includes.map((tourIncluded: TourIncluded, index: number) => (
                       <li key={index} className="flex items-center">
                         <RiCheckFill size="1.6rem" className="text-green-500" />
-                        {tourIncluded}
+                        {tourIncluded.title}
                       </li>
 
                     ))
