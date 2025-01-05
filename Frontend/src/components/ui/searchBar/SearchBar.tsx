@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useStoreTour from "../../../stores/zustand/Store";
 import stringContainsAllArray from "../../../utils/stringContainsAllArray";
-import Tour from "../../../types/Tour";
+import { Tour } from "../../../types/Tour";
 import LoadingIcon from "../customIcons/Loading";
 
 const SearchBar = () => {

@@ -1,10 +1,12 @@
 import { useParams } from 'react-router-dom';
 import SectionContainer from '../components/SectionContainer';
 import { useEffect, useState } from 'react';
-import { Tour, TourIncluded } from '../types/Tour';
+import { Tour } from '../types/Tour';
 import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { HiViewGridAdd } from "react-icons/hi";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import 'photoswipe/style.css';
 
 
 interface Position {
@@ -31,7 +33,7 @@ const TourSingle = () => {
         setTour(data)
 
       } catch (error) {
-        console.error('Errore nella richiesta dei dati:', error);
+        //console.error('Errore nella richiesta dei dati:', error);
       }
     }
 
@@ -64,6 +66,8 @@ const TourSingle = () => {
     googleMapsApiKey: 'AIzaSyCh0pCKWB2Zq5eIRgZFzqgINDRIr-KjHVw',
   });
 
+
+
   return !tour ? (
     <SectionContainer>
       <p>Tour not found</p>
@@ -71,19 +75,20 @@ const TourSingle = () => {
   ) : (
     <>
       <SectionContainer>
-        <div className="grid grid-cols-3 gap-2 relative">
-          {tour.gallery.map((galleryImage, index) => (
-            <div key={index}>
-              <img
-                className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60"
-                src={import.meta.env.VITE_UPLOAD_URL + galleryImage}
-                alt=""
-              />
-            </div>
+        <div className="pswp-gallery grid grid-cols-3 gap-2 relative" id={tourId}>
+          {tour.gallery.slice(0, 3).map((image, index) => (
+            <a
+              href={import.meta.env.VITE_UPLOAD_URL + image}
+              key={tour._id + '-' + index}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60" src={import.meta.env.VITE_UPLOAD_URL + image} alt={image} />
+            </a>
           ))}
           <div className="flex flex-row gap-1 items-center bg-white px-4 py-2 rounded-full absolute bottom-2 right-2">
             <HiViewGridAdd size={18} />
-            <p>+ 3 foto</p>
+            <p>+ {tour.gallery.length - 3} foto</p>
           </div>
         </div>
 
@@ -103,7 +108,7 @@ const TourSingle = () => {
                 </h3>
                 <ul className="space-y-2">
                   {
-                    tour.includes.map((tourIncluded: TourIncluded, index: number) => (
+                    tour.includes.map((tourIncluded, index: number) => (
                       <li key={index} className="flex items-center">
                         <RiCheckFill size="1.6rem" className="text-green-500" />
                         {tourIncluded.title}
@@ -127,7 +132,7 @@ const TourSingle = () => {
                     tour.excludes.map((tourExcluded, index) => (
                       <li key={index} className="flex items-center">
                         <RiCloseFill size="1.6rem" className="text-red-600" />
-                        {tourExcluded}
+                        {tourExcluded.title}
                       </li>
                     ))
                   }

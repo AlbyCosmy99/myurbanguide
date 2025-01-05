@@ -26,3 +26,16 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
   color: white;
 }
+
+/* lightbox */
+img.pswp__img {
+  height: 90vh !important;
+  width: auto !important;
+}
+img.pswp__img {
+  height: 90vh !important;
+  width: auto !important;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}

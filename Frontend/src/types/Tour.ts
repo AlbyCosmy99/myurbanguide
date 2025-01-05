@@ -2,6 +2,10 @@ export interface TourIncluded {
   title: string;
 }
 
+export interface TourExcluded {
+  title: string;
+}
+
 export interface Tour {
   _id: string;
   title: string;
@@ -11,7 +15,7 @@ export interface Tour {
   duration: string;
   gallery: string[];
   includes: TourIncluded[];
-  excludes: string[];
+  excludes: TourExcluded[];
   meeting_point: {
     latitude: number;
     longitude: number;

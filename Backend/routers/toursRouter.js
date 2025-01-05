@@ -20,7 +20,10 @@ tourRouter.get('/', async (req, res) => {
 
 tourRouter.get('/:id', async (req, res) => {
     res.status(200).json(
-        await TourModel.findOne({ _id: req.params.id }).populate('includes')
+        await TourModel.findOne({ _id: req.params.id }).populate([
+            { path: 'includes' },
+            { path: 'excludes' }
+        ])
     )
 })
 

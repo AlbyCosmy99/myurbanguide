@@ -10,7 +10,7 @@ export const checkTokenPayload = async (updateUser: Function, navigate: Function
     if (!token) {
         localStorage.removeItem("token");
         updateUser(null);
-        navigate("/");
+        //navigate("/");
         return;
     }
 
@@ -31,10 +31,10 @@ export const checkTokenPayload = async (updateUser: Function, navigate: Function
             updateUser(userFromToken);
         }
     } catch (error) {
-        console.error("Errore durante la verifica del token:", error);
+        //console.error("Errore durante la verifica del token:", error);
         localStorage.removeItem("token");
         updateUser(null);
-        navigate("/");
+        //navigate("/");
     }
 };
 
@@ -44,7 +44,7 @@ const useTokenPayload = () => {
 
     useEffect(() => {
         checkTokenPayload(updateUser, navigate, user);
-    }, [navigate, updateUser, user]);
+    }, [user]);
 };
 
 export default useTokenPayload;

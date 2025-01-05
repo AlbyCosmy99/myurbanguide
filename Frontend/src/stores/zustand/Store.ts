@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import Tour from '../../types/Tour';
+import { Tour } from '../../types/Tour';
 import { persist } from 'zustand/middleware';
 
 type StoreTour = {
@@ -27,7 +27,7 @@ const useStoreTour = create<StoreTour>(
 
         } catch (error) {
           set({ toursLoading: true });
-          console.error('Errore nella richiesta dei dati:', error);
+          //console.error('Errore nella richiesta dei dati:', error);
         }
       },
 

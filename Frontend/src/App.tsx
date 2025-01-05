@@ -18,7 +18,7 @@ function App() {
     }, 300)
 
     return () => clearTimeout(timeout)
-  }, [navigate, updateUser, user]);
+  }, [user]);
 
   return (
     <>

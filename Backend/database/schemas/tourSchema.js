@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Schema } from 'mongoose'
 import { IncludesModel } from "./includesSchema.js";
+import { ExcludesModel } from "./excludesSchema.js";
 
 
 const tourSchema = mongoose.Schema({
@@ -60,8 +61,14 @@ const tourSchema = mongoose.Schema({
         }
     },
     excludes: {
-        type: [Schema.Types.ObjectId],
-        ref: 'excludes',
+        type: [{ type: Schema.Types.ObjectId, ref: 'excludes' }],
+        validate: {
+            validator: async function (values) {
+                const count = await ExcludesModel.countDocuments({ _id: { $in: values } })
+                return count === values.length
+            },
+            message: 'exclude not found'
+        }
     },
     highlights: {
         type: [String]

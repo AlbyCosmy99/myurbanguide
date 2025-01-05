@@ -23,9 +23,6 @@ export default function NewTour() {
     const [tourTitle, setTourTitle] = useState<string>('')
     const [tourDescription, setTourDescription] = useState<string>('')
 
-    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-    const [uploadMessage, setUploadMessage] = useState<string>("");
-
     const [latitude, setLatitude] = useState<number | null>(null)
     const [longitude, setLongitude] = useState<number | null>(null)
     const [address, setAddress] = useState<string | undefined>(undefined)
@@ -38,6 +35,11 @@ export default function NewTour() {
     const [includesList, setIncludesList] = useState<string[]>([])
     const [exclusesValue, setExclusesValue] = useState<string>("");
     const [exclusesList, setExclusesList] = useState<string[]>([])
+
+    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+    const [uploadMessage, setUploadMessage] = useState('');
+    const [dragActive, setDragActive] = useState(false);
+    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
     const { user } = useAuthStore()
 
@@ -87,13 +89,47 @@ export default function NewTour() {
         setExclusesList(exclusesList.filter((item) => item !== itemToRemove))
     };
 
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragActive(true);
+    };
 
-    /* FILES */
-    const handleUpload = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragActive(false);
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setDragActive(false);
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            handleFiles(e.target.files);
+        }
+    };
+
+    const handleFiles = (files: FileList) => {
+        setSelectedFiles(files);
+        const urls = Array.from(files).map((file) => {
+            if (file.type.startsWith("image/")) {
+                return URL.createObjectURL(file);
+            }
+            return null;
+        }).filter(Boolean) as string[];
+        setPreviewUrls(urls);
+        setUploadMessage('');
+    };
+
+    /* NUOVO TOUR */
+    const SubmitNewTour = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (!selectedFiles || selectedFiles.length === 0) {
-            setUploadMessage("Please select files to upload!");
+            setUploadMessage("Seleziona almeno un file");
             return;
         }
 
@@ -115,7 +151,12 @@ export default function NewTour() {
                 setUploadMessage("File caricati");
 
                 const includesIds = await createIncludes(includesList);
-                await createNewTour(filenames, includesIds);
+                const excludesIds = await createExcludes(exclusesList);
+
+                console.log("Includes IDs:", includesIds);
+                console.log("Excludes IDs:", excludesIds);
+
+                await createNewTour(filenames, includesIds, excludesIds);
             } else {
                 setUploadMessage("Errore nel caricamento del file");
             }
@@ -138,7 +179,8 @@ export default function NewTour() {
 
             if (response.ok) {
                 const data = await response.json();
-                return data.includes.map((include: { _id: string }) => include._id);
+                console.log("Includes response:", data);
+                return data.includes
             } else {
                 console.error("Errore nella creazione degli includes");
                 return [];
@@ -149,29 +191,59 @@ export default function NewTour() {
         }
     };
 
-    const createNewTour = async (filenames: FileType[], includesIds: string[]) => {
+    const createExcludes = async (excludesList: string[]) => {
+        try {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/excludes', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    excludes: excludesList,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Excludes response:", data);
+                return data.excludes
+            } else {
+                console.error("Errore nella creazione degli excludes");
+                return [];
+            }
+        } catch (error) {
+            console.error("Errore nella richiesta degli excludes", error);
+            return [];
+        }
+    };
+
+    const createNewTour = async (filenames: FileType[], includesIds: string[], excludesIds: string[]) => {
         if (user) {
             try {
+                const tourData = {
+                    user: user.id,
+                    title: tourTitle,
+                    description: tourDescription,
+                    meeting_point: {
+                        latitude: latitude,
+                        longitude: longitude,
+                        address: address,
+                    },
+                    price: tourPrice,
+                    duration: tourDuration,
+                    gallery: filenames,
+                    featured_image: filenames[0],
+                    includes: includesIds,
+                    excludes: excludesIds,
+                }
+                console.log(tourData)
+
                 await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                        user: user.id,
-                        title: tourTitle,
-                        description: tourDescription,
-                        meeting_point: {
-                            latitude: latitude,
-                            longitude: longitude,
-                            address: address,
-                        },
-                        price: tourPrice,
-                        duration: tourDuration,
-                        gallery: filenames,
-                        featured_image: filenames[0],
-                        includes: includesIds,
-                    }),
+                    body: JSON.stringify(tourData),
                 });
 
                 navigate('/dashboard');
@@ -188,7 +260,7 @@ export default function NewTour() {
 
     return (
         <SectionContainer>
-            <form onSubmit={handleUpload}>
+            <form onSubmit={SubmitNewTour}>
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h3 className="text-2xl font-semibold text-gray-800">Inserisci nuovo Tour</h3>
@@ -199,7 +271,7 @@ export default function NewTour() {
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-4">
                                 <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900">
-                                    Titolo
+                                    Titolo <span className="text-red-700">*</span>
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -209,6 +281,7 @@ export default function NewTour() {
                                         autoComplete="given-name"
                                         className="input-style"
                                         onChange={(e) => setTourTitle(e.target.value)}
+                                        required
                                     />
 
                                 </div>
@@ -216,7 +289,7 @@ export default function NewTour() {
 
                             <div className="col-span-full">
                                 <label htmlFor="description" className="block text-sm/6 font-medium text-gray-900">
-                                    Descrizione
+                                    Descrizione <span className="text-red-700">*</span>
                                 </label>
                                 <div className="mt-2">
                                     <textarea
@@ -226,6 +299,7 @@ export default function NewTour() {
                                         className="input-style"
                                         defaultValue={''}
                                         onChange={(e) => setTourDescription(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 <p className="mt-3 text-sm/6 text-gray-600">Scrivi una breve descrizione del Tour</p>
@@ -241,10 +315,11 @@ export default function NewTour() {
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-3">
                                 <label htmlFor="first-name" className="block text-sm/6 font-medium text-gray-900">
-                                    Punto di incontro
+                                    Punto di incontro <span className="text-red-700">*</span>
                                 </label>
                                 <div className="mt-2">
                                     <ReactGoogleAutocomplete
+                                        aria-required
                                         className="input-style mt-2"
                                         apiKey="AIzaSyBMpWoqgN_s313JgoG5YLC3dJZxnsHmJdc"
                                         onPlaceSelected={(place) => {
@@ -262,21 +337,23 @@ export default function NewTour() {
 
                             <div className="sm:col-span-1">
                                 <label htmlFor="price" className="block text-sm/6 font-medium text-gray-900">
-                                    Prezzo
+                                    Prezzo <span className="text-red-700">*</span>
                                 </label>
                                 <div className="mt-2">
                                     <input
                                         id="price"
                                         name="price"
                                         type="number"
+                                        step={0.01}
                                         className="input-style"
                                         onChange={(e) => setTourPrice(parseFloat(e.target.value))}
+                                        required
                                     />
                                 </div>
                             </div>
                             <div className="sm:col-span-2">
                                 <label htmlFor="duration" className="block text-sm/6 font-medium text-gray-900">
-                                    Durata
+                                    Durata <span className="text-red-700">*</span>
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -285,6 +362,7 @@ export default function NewTour() {
                                         type="text"
                                         className="input-style"
                                         onChange={(e) => setTourDuration(e.target.value)}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -355,26 +433,53 @@ export default function NewTour() {
 
                             <div className="col-span-full">
                                 <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900">
-                                    Galleria foto
+                                    Galleria foto <span className="text-red-700">*</span>
                                 </label>
-                                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                <div
+                                    className={`mt-2 flex justify-center rounded-lg border border-dashed ${dragActive ? 'border-[#E29C00] bg-[#F9F2E2]' : 'border-gray-900/25'
+                                        } p-6`}
+                                    onDragOver={handleDragOver}
+                                    onDragLeave={handleDragLeave}
+                                    onDrop={handleDrop}
+                                >
                                     <div className="text-center">
                                         <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
-                                        <div className="mt-4 flex text-sm/6 text-gray-600">
+                                        <div className="mt-4 flex justify-center text-sm/6 text-gray-600">
                                             <label
                                                 htmlFor="file-upload"
-                                                className="relative cursor-pointer rounded-md bg-white font-semibold text-[#E29C00] focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-[#E29C00]"
+                                                className="relative cursor-pointer rounded-md font-semibold text-[#E29C00] hover:text-[#E29C00]"
                                             >
                                                 <span>Carica foto</span>
-                                                <input id="file-upload" name="photos" type="file" className="sr-only" multiple onChange={(e) => setSelectedFiles(e.target.files)} />
+                                                <input
+                                                    id="file-upload"
+                                                    name="photos"
+                                                    type="file"
+                                                    className="sr-only"
+                                                    multiple
+                                                    onChange={handleFileChange}
+                                                />
                                             </label>
                                             <p className="pl-1">Oppure trascina qui</p>
                                         </div>
                                         <p className="text-xs/5 text-gray-600">PNG, JPG, TIFF sotto i 10MB</p>
-                                        {uploadMessage && <p>{uploadMessage}</p>}
+                                        {uploadMessage && (
+                                            <p className="mt-2 font-semibold text-red-700 text-sm">{uploadMessage}</p>
+                                        )}
+                                        <div className="mt-4 grid grid-cols-6 gap-4">
+                                            {previewUrls.map((url, index) => (
+                                                <div key={index} className="relative">
+                                                    <img
+                                                        src={url}
+                                                        alt={`Anteprima ${index + 1}`}
+                                                        className="w-full h-32 object-cover rounded-md shadow"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -386,7 +491,7 @@ export default function NewTour() {
                     </button>
                     <button
                         type="submit"
-                        className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold"
                     >
                         Crea Tour
                     </button>

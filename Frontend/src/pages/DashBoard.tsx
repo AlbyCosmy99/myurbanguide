@@ -1,6 +1,6 @@
 import SectionContainer from "../components/SectionContainer"
 import HeadersDashboard from "../components/navigation/Headings"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import useAuthStore from "../stores/zustand/AuthStore"
 import { useEffect, useState } from "react"
 import { Tour } from "../types/Tour"
@@ -11,13 +11,15 @@ const DashBoard = () => {
     const { user } = useAuthStore()
     const [userTours, setUserTours] = useState<Tour[]>([])
 
+    const navigate = useNavigate()
+
     useTokenPayload()
 
     useEffect(() => {
         if (user && user.id) {
             fetchTours();
         } else {
-            console.log("User non definito");
+            navigate('/')
         }
     }, [user]);
 
@@ -33,7 +35,7 @@ const DashBoard = () => {
             const userTours = await res.json();
             setUserTours(userTours);
         } catch (error) {
-            console.error('Errore nella richiesta dei dati:', error);
+            //console.error('Errore nella richiesta dei dati:', error);
         }
     };
 
