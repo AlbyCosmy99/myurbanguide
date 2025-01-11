@@ -11,15 +11,6 @@ import NewTour from "./pages/NewTour.tsx";
 import DashboardBody from "./components/navigation/DashboardBody.tsx";
 import SuccessAuth from "./pages/SuccessAuth.tsx";
 
-import Alpine from 'alpinejs';
-import focus from '@alpinejs/focus';
-import lightbox from 'alpine-tailwind-lightbox';
-
-Alpine.plugin(focus);
-Alpine.plugin(lightbox);
-
-Alpine.start();
-
 const Home = lazy(() => import('./pages/home/Home.tsx'))
 const Tours = lazy(() => import("./pages/Tours.tsx"))
 const DashBoard = lazy(() => import("./pages/DashBoard.tsx"))

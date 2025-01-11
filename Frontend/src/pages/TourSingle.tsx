@@ -5,8 +5,10 @@ import { Tour } from '../types/Tour';
 import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { HiViewGridAdd } from "react-icons/hi";
-import PhotoSwipeLightbox from "photoswipe/lightbox";
-import 'photoswipe/style.css';
+import Lightbox from "yet-another-react-lightbox";
+import Counter from "yet-another-react-lightbox/plugins/counter";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/counter.css";
 
 
 interface Position {
@@ -19,6 +21,8 @@ const TourSingle = () => {
   const [tour, setTour] = useState<Tour | undefined>(undefined);
   const [center, setCenter] = useState<Position | null>(null);
   const [mapLoading, setMapLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(-1);
 
   useEffect(() => {
     const getSingleTour = async () => {
@@ -67,28 +71,57 @@ const TourSingle = () => {
   });
 
 
-
   return !tour ? (
-    <SectionContainer>
-      <p>Tour not found</p>
-    </SectionContainer>
+    <>
+      <SectionContainer>
+        <div className="animate-pulse grid grid-cols-3 gap-2 relative">
+          <div className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60 bg-gray-100 dark:bg-gray-700"></div>
+          <div className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60 bg-gray-100 dark:bg-gray-700"></div>
+          <div className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60 bg-gray-100 dark:bg-gray-700"></div>
+        </div>
+
+      </SectionContainer>
+
+      <SectionContainer>
+        <div className="animate-pulse">
+          <div className="h-9 bg-gray-100 rounded-full dark:bg-gray-700 w-4/12 mb-8"></div>
+          <div className="h-4 bg-gray-100 rounded-full dark:bg-gray-700 mb-2.5"></div>
+          <div className="h-4 bg-gray-100 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        </div>
+      </SectionContainer>
+    </>
   ) : (
     <>
+      <Lightbox
+        index={index}
+        open={open}
+        close={() => setOpen(false)}
+        slides={tour.gallery.map((image) => ({
+          src: import.meta.env.VITE_UPLOAD_URL + image,
+        }))}
+        controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
+        plugins={[Counter]}
+        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+        styles={{ container: { backgroundColor: "rgba(0, 0, 0, .8)" } }}
+      />
       <SectionContainer>
         <div className="pswp-gallery grid grid-cols-3 gap-2 relative" id={tourId}>
           {tour.gallery.slice(0, 3).map((image, index) => (
-            <a
-              href={import.meta.env.VITE_UPLOAD_URL + image}
-              key={tour._id + '-' + index}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60" src={import.meta.env.VITE_UPLOAD_URL + image} alt={image} />
-            </a>
+            <img
+              onClick={() => {
+                setIndex(index)
+                setOpen(true)
+              }}
+              className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60"
+              src={import.meta.env.VITE_UPLOAD_URL + image} alt={image}
+            />
           ))}
           <div className="flex flex-row gap-1 items-center bg-white px-4 py-2 rounded-full absolute bottom-2 right-2">
             <HiViewGridAdd size={18} />
-            <p>+ {tour.gallery.length - 3} foto</p>
+            <p onClick={() => {
+              setIndex(3)
+              setOpen(true)
+            }}>+ {tour.gallery.length - 3} foto</p>
           </div>
         </div>
 

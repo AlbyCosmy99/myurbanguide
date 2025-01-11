@@ -7,6 +7,7 @@ import LoadingIcon from "../ui/customIcons/Loading";
 import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
 import handleGoogleAuth from "../../utils/GoogleLogin";
+import { checkTokenPayload } from "../../hooks/useTokenPayload";
 
 interface LoginFormProps {
   changeForm: () => void;
@@ -52,10 +53,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
         localStorage.setItem('token', token)
 
         if (token) {
-          navigate('/dashboard')
           setErrorMessage('')
           setLoading(false)
           setModalOpen(false)
+          //navigate('/dashboard')
+          window.location.reload();
         }
       }
 

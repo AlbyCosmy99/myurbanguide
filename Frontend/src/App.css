@@ -27,15 +27,6 @@ select:-webkit-autofill:focus {
   color: white;
 }
 
-/* lightbox */
-img.pswp__img {
-  height: 90vh !important;
-  width: auto !important;
-}
-img.pswp__img {
-  height: 90vh !important;
-  width: auto !important;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
+.yarl__container {
+  background-color: #000000ba;
 }

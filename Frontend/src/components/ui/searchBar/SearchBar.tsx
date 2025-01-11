@@ -71,7 +71,7 @@ const SearchBar = () => {
                             className="flex mb-1 items-center gap-x-3 py-2 px-2 hover:bg-gray-100 cursor-pointer rounded-lg"
                         >
                             <img
-                                src={`src/assets/img/${tour.featured_image}`}
+                                src={`${import.meta.env.VITE_UPLOAD_URL + tour.featured_image}`}
                                 className="w-11 h-11 rounded-md object-cover"
                             />
                             <a className="block leading-4 text-gray-900">

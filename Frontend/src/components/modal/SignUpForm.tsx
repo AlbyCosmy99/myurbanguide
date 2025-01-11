@@ -54,7 +54,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
         localStorage.setItem('token', token)
 
         if (token) {
-          navigate('/dashboard')
+          //navigate('/dashboard')
         }
 
         setErrorMessage('')

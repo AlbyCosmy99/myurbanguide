@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       checkTokenPayload(updateUser, navigate, user)
-    }, 300)
+    }, 0)
 
     return () => clearTimeout(timeout)
   }, [user]);
