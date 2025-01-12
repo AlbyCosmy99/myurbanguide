@@ -1,50 +1,55 @@
 import { useEffect } from "react";
 import User from "../types/User";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Correggi l'importazione
 import useAuthStore from "../stores/zustand/AuthStore";
 import { useNavigate } from "react-router-dom";
-
-export const checkTokenPayload = async (updateUser: Function, navigate: Function, user: User | null) => {
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-        localStorage.removeItem("token");
-        updateUser(null);
-        //navigate("/");
-        return;
-    }
-
-    try {
-        const res = await fetch(import.meta.env.VITE_BACKEND_URL + 'auth/token/check', {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!res.ok) {
-            throw new Error("Token non valido");
-        }
-
-        if (!user) {
-            const userFromToken = jwtDecode<User>(token);
-            updateUser(userFromToken);
-        }
-    } catch (error) {
-        //console.error("Errore durante la verifica del token:", error);
-        localStorage.removeItem("token");
-        updateUser(null);
-        //navigate("/");
-    }
-};
 
 const useTokenPayload = () => {
     const { user, updateUser } = useAuthStore();
     const navigate = useNavigate();
 
     useEffect(() => {
-        checkTokenPayload(updateUser, navigate, user);
-    }, [user]);
+        const checkToken = async () => {
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                localStorage.removeItem("token");
+                updateUser(null);
+                return;
+            }
+
+            try {
+                const res = await fetch(import.meta.env.VITE_BACKEND_URL + 'auth/token/check', {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) {
+                    throw new Error("Token non valido");
+                }
+
+                if (!user) {
+                    const newUser = jwtDecode<User>(token);
+                    updateUser(newUser);
+                }
+
+            } catch (error) {
+                console.error("Errore durante la verifica del token:", error, token);
+                localStorage.removeItem("token");
+                updateUser(null);
+            }
+        };
+
+
+        const timeoutId = setTimeout(() => {
+            checkToken();
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [user, navigate]);
+
 };
 
 export default useTokenPayload;

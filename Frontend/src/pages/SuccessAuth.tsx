@@ -14,13 +14,13 @@ const SuccessAuth = () => {
 
     useEffect(() => {
         if (token && id && username && email) {
+            console.log(token)
             localStorage.setItem('token', token);
 
-            const user = {
+            const newUser = {
                 id, username, email
             };
-
-            updateUser(user);
+            updateUser(newUser);
             navigate('/dashboard');
         } else {
             navigate('/');
@@ -30,6 +30,8 @@ const SuccessAuth = () => {
     return (
         <p>Login in corso</p>
     )
+
+
 }
 
 export default SuccessAuth

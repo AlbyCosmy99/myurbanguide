@@ -3,22 +3,11 @@ import NavBar from './components/navigation/navBar/NavBar';
 import Footer from './components/footer/Footer';
 import { Outlet } from 'react-router-dom';
 import ScrollToTop from "./utils/ScrollToTop";
-import { checkTokenPayload } from "./hooks/useTokenPayload";
-import { useEffect } from "react";
-import useAuthStore from "./stores/zustand/AuthStore";
-import { useNavigate } from "react-router-dom";
+import useTokenPayload from "./hooks/useTokenPayload";
 
 function App() {
-  const { user, updateUser } = useAuthStore();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      checkTokenPayload(updateUser, navigate, user)
-    }, 0)
-
-    return () => clearTimeout(timeout)
-  }, [user]);
+  useTokenPayload()
 
   return (
     <>

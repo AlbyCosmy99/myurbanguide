@@ -16,6 +16,7 @@ const DashBoard = () => {
     useTokenPayload()
 
     useEffect(() => {
+        console.log(user)
         if (user && user.id) {
             fetchTours();
         } else {
@@ -35,7 +36,7 @@ const DashBoard = () => {
             const userTours = await res.json();
             setUserTours(userTours);
         } catch (error) {
-            //console.error('Errore nella richiesta dei dati:', error);
+            console.error('Errore nella richiesta dei dati:', error);
         }
     };
 
