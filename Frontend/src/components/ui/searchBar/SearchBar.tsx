@@ -21,7 +21,6 @@ const SearchBar = () => {
                 const filtered = tours.filter(tour => {
                     return stringContainsAllArray(tour.title, searchQueryTerms);
                 });
-                //console.log(filtered);
 
                 setFilteredTour(filtered);
                 setLoading(false);

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import User from "../types/User";
-import { jwtDecode } from "jwt-decode"; // Correggi l'importazione
+import { jwtDecode } from "jwt-decode";
 import useAuthStore from "../stores/zustand/AuthStore";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,10 @@ const useTokenPayload = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log('user in useTokenPayload: ', user)
         const checkToken = async () => {
             const token = localStorage.getItem("token");
-
+            console.log('token in useTokenPayload: ', token)
             if (!token) {
                 localStorage.removeItem("token");
                 updateUser(null);

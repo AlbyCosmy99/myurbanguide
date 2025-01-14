@@ -1,9 +1,8 @@
-import { FaApple, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import OauthButton from "../ui/buttons/OauthButton";
 import { useState } from "react";
 import LoadingIcon from "../ui/customIcons/Loading";
-import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
 import handleGoogleAuth from "../../utils/GoogleLogin";
 
@@ -21,8 +20,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
   const [loading, setLoading] = useState<Boolean>(false)
 
   const { setModalOpen } = useModalStore()
-
-  const navigate = useNavigate()
 
   const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -214,8 +211,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
           </div>
           <div className="mt-1">
             <OauthButton onClick={() => { }}>
-              <FaApple />
-              Accedi con Apple
+              <FaGithub />
+              Accedi con GitHub
             </OauthButton>
           </div>
         </div>

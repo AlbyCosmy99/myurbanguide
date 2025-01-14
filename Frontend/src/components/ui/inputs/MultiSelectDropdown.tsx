@@ -25,7 +25,6 @@ const MultiSelectDropdown: React.FC<MultiSelectDropdownProps> = ({ formFieldName
                     title: newInclude
                 }),
             });
-            console.log()
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

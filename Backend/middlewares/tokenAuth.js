@@ -24,10 +24,30 @@ const tokenAuth = async (req, res, next) => {
                 const payload = jwt.verify(token, process.env.JWT_SECRET)
                 req.payload = payload
                 return next()
+
             } catch (jwtError) {
-                return res.status(401).json({
-                    message: 'Invalid token',
-                })
+
+                try {
+                    const githubResponse = await fetch('https://api.github.com/user', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!githubResponse.ok) {
+                        throw new Error('GitHub token invalid or expired');
+                    }
+
+                    const githubUser = await githubResponse.json();
+                    req.payload = githubUser;
+                    return next();
+
+                } catch (githubError) {
+
+                    return res.status(401).json({
+                        message: 'Invalid token',
+                    });
+                }
             }
         }
     }

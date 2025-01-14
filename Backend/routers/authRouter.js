@@ -4,10 +4,12 @@ import jwt from 'jsonwebtoken'
 import { UserModel } from "../database/schemas/userSchema.js"
 import tokenAuth from "../middlewares/tokenAuth.js"
 import googleRouter from "./googleRouter.js"
+import githubRouter from "./githubRouter.js"
 
 const authRouter = express.Router()
 
 authRouter.use('/google', googleRouter)
+authRouter.use('/github', githubRouter)
 
 authRouter.post('/register', async (req, res) => {
     try {

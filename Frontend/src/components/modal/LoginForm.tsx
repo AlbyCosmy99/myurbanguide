@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { FaApple } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import OauthButton from "../ui/buttons/OauthButton";
 import LoadingIcon from "../ui/customIcons/Loading";
-import { useNavigate } from "react-router-dom";
 import useModalStore from "../../stores/zustand/ModalStore";
 import handleGoogleAuth from "../../utils/GoogleLogin";
-import { checkTokenPayload } from "../../hooks/useTokenPayload";
+import handleGithubAuth from "../../utils/GithubLogin";
 
 interface LoginFormProps {
   changeForm: () => void;
@@ -21,8 +20,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
   const [loading, setLoading] = useState<Boolean>(false)
 
   const { setModalOpen } = useModalStore()
-
-  const navigate = useNavigate();
 
   const changeTypePassword = () => {
     setType(type === 'password' ? 'text' : 'password');
@@ -168,9 +165,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
             </OauthButton>
           </div>
           <div className="mt-1">
-            <OauthButton onClick={() => { }}>
-              <FaApple />
-              Accedi con Apple
+            <OauthButton onClick={handleGithubAuth}>
+              <FaGithub />
+              Accedi con GitHub
             </OauthButton>
           </div>
         </div>

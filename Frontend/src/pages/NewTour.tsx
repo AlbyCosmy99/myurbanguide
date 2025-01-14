@@ -153,9 +153,6 @@ export default function NewTour() {
                 const includesIds = await createIncludes(includesList);
                 const excludesIds = await createExcludes(exclusesList);
 
-                console.log("Includes IDs:", includesIds);
-                console.log("Excludes IDs:", excludesIds);
-
                 await createNewTour(filenames, includesIds, excludesIds);
             } else {
                 setUploadMessage("Errore nel caricamento del file");
@@ -179,7 +176,6 @@ export default function NewTour() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("Includes response:", data);
                 return data.includes
             } else {
                 console.error("Errore nella creazione degli includes");
@@ -205,7 +201,6 @@ export default function NewTour() {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log("Excludes response:", data);
                 return data.excludes
             } else {
                 console.error("Errore nella creazione degli excludes");

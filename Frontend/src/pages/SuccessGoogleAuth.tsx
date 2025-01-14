@@ -1,8 +1,9 @@
 import { useEffect } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import useAuthStore from "../stores/zustand/AuthStore"
+import SectionContainer from "../components/SectionContainer"
 
-const SuccessAuth = () => {
+const SuccessGoogleAuth = () => {
     const [params] = useSearchParams()
     const token = params.get('token')
     const id = params.get('id')
@@ -28,10 +29,12 @@ const SuccessAuth = () => {
     }, []);
 
     return (
-        <p>Login in corso</p>
+        <SectionContainer>
+            <p>Login in corso</p>
+        </SectionContainer>
     )
 
 
 }
 
-export default SuccessAuth
+export default SuccessGoogleAuth

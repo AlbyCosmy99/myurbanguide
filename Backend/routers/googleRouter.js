@@ -40,7 +40,7 @@ googleRouter.get('/callback', async (req, res) => {
 
         const existingUser = await UserModel.findOne({ email: user.email });
         if (existingUser) {
-            return res.redirect('http://localhost:5173/success?token=' + token + '&id=' + existingUser._id + '&username=' + existingUser.username + '&email=' + existingUser.email);
+            return res.redirect('http://localhost:5173/google/success?token=' + token + '&id=' + existingUser._id + '&username=' + existingUser.username + '&email=' + existingUser.email);
         }
 
         const newUser = new UserModel({
@@ -50,7 +50,7 @@ googleRouter.get('/callback', async (req, res) => {
         });
         await newUser.save();
 
-        res.redirect('http://localhost:5173/success?token=' + token + '&id=' + newUser._id + '&name=' + newUser.username + '&email=' + newUser.email);
+        res.redirect('http://localhost:5173/google/success?token=' + token + '&id=' + newUser._id + '&name=' + newUser.username + '&email=' + newUser.email);
     } catch (error) {
         console.error('Error during Google OAuth callback:', error);
         res.status(500).send('Internal Server Error');

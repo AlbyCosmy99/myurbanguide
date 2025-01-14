@@ -9,7 +9,8 @@ import { ThemeProvider } from '@material-tailwind/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NewTour from "./pages/NewTour.tsx";
 import DashboardBody from "./components/navigation/DashboardBody.tsx";
-import SuccessAuth from "./pages/SuccessAuth.tsx";
+import SuccessGithubAuth from "./pages/SuccessGithubAuth.tsx";
+import SuccessGoogleAuth from "./pages/SuccessGoogleAuth.tsx";
 
 const Home = lazy(() => import('./pages/home/Home.tsx'))
 const Tours = lazy(() => import("./pages/Tours.tsx"))
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
         element: <Suspense><Home /></Suspense>,
       },
       {
-        path: '/success',
-        element: <SuccessAuth />
+        path: '/google/success',
+        element: <SuccessGoogleAuth />
+      },
+      {
+        path: '/github/success',
+        element: <SuccessGithubAuth />
       },
       {
         path: '/tours/',

@@ -37,7 +37,7 @@ const TourSingle = () => {
         setTour(data)
 
       } catch (error) {
-        //console.error('Errore nella richiesta dei dati:', error);
+        console.error('Errore nella richiesta dei dati:', error);
       }
     }
 
