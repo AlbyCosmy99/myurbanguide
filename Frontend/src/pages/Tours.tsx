@@ -5,9 +5,10 @@ import useStoreTour from '../stores/zustand/Store';
 import { useEffect } from 'react';
 
 function Tours() {
-    const { tours, toursLoading, getTour } = useStoreTour();
+    const { totalPages, tours, toursLoading, getTour } = useStoreTour();
 
     useEffect(() => {
+        console.log(totalPages)
         getTour();
     }, []);
 
@@ -15,7 +16,7 @@ function Tours() {
         <>
             <SectionContainer>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {tours.map(tour => (
+                    {tours.data.map(tour => (
                         <SmallCard
                             key={tour._id}
                             toursLoading={toursLoading}

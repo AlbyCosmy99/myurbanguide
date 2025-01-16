@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import 'dotenv/config'
 import apiRouter from "./routers/apiRouter.js"
+import rateLimit from "express-rate-limit"
 
 const server = express()
 const port = 3030
@@ -10,8 +11,16 @@ const port = 3030
 const username = encodeURIComponent(process.env.USR_DB)
 const password = encodeURIComponent(process.env.PSW_DB)
 
+//express-rate-limit
+const limiter = rateLimit({
+    windowMs: 30 * 1000, //5 minuti,
+    max: 1, //numero massimo di richieste che si possono fare nell'arco temporale impostato
+    message: "Hai fatto troppe richieste in breve tempo"
+})
+
 server.use(cors())
 server.use(express.json())
+server.use(limiter)
 
 server.use('/api', apiRouter)
 

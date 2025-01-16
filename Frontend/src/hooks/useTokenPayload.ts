@@ -9,10 +9,8 @@ const useTokenPayload = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('user in useTokenPayload: ', user)
         const checkToken = async () => {
             const token = localStorage.getItem("token");
-            console.log('token in useTokenPayload: ', token)
             if (!token) {
                 localStorage.removeItem("token");
                 updateUser(null);

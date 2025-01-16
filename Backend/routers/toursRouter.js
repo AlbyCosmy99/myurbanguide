@@ -4,6 +4,7 @@ import includesRouter from "./includesRouter.js"
 import excludesRouter from "./excludesRouter.js"
 import languagesRouter from "./languagesRouter.js"
 import userToursRouter from "./userToursRouter.js"
+import mongoSanitize from 'mongo-sanitize'
 
 const tourRouter = express.Router()
 
@@ -13,10 +14,26 @@ tourRouter.use('/languages', languagesRouter)
 tourRouter.use('/usertours', userToursRouter)
 
 tourRouter.get('/', async (req, res) => {
-    return res.status(200).json(
-        await TourModel.find().populate('includes')
-    )
-})
+    try {
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 6
+        const skip = (page - 1) * limit
+
+        const tours = await TourModel.find().skip(skip).limit(limit);
+
+        const total = await TourModel.countDocuments();
+
+        res.status(200).json({
+            total,
+            page,
+            totalPages: Math.ceil(total / limit),
+            data: tours,
+        });
+    } catch (err) {
+        res.status(500).json({ error: 'Errore del server', message: err.message });
+    }
+});
+
 
 tourRouter.get('/:id', async (req, res) => {
     res.status(200).json(
@@ -44,8 +61,21 @@ tourRouter.delete('/:id', async (req, res) => {
 })
 
 tourRouter.post("/", async (req, res) => {
+    const bodySanitized = mongoSanitize(req.body)
     try {
-        const newTour = new TourModel(req.body)
+
+        // const newInclude = new IncludesModel({ title })
+        // await newInclude.save()
+
+        // //da aggiustare
+        // const body = {
+        //     ...bodySanitized,
+        //     includeId: newInclude._id
+        // }
+
+
+
+        const newTour = new TourModel(bodySanitized)
         await newTour.save()
 
         return res.status(201).json(newTour)
@@ -59,3 +89,4 @@ tourRouter.post("/", async (req, res) => {
 })
 
 export default tourRouter;
+

@@ -52,7 +52,7 @@ const SmallCard: React.FC<CardProps> = ({
     <Link to={'/tours/' + id}>
       <div className="border border-gray-300 rounded-lg cursor-pointer hover:scale-105 transition duration-200 ease-out h-full">
         <div
-        ><img src={import.meta.env.VITE_UPLOAD_URL + image} alt={title} className="fitaspect-[4/3] object-cover rounded-t-md" /></div>
+        ><img src={import.meta.env.VITE_UPLOAD_URL + image} alt={title} className="fit aspect-[2] object-cover rounded-t-md" /></div>
         <div role="status" className="p-4 md:p-6 dark:border-gray-700">
           <h1 className="text-lg font-bold pb-1">{title}</h1>
           <p className="text-sm">{description}</p>

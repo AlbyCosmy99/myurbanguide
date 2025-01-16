@@ -11,12 +11,14 @@ const SectionContainer: React.FC<ContainerProps> = ({
 }) => {
   return (
     <section
-      className="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-4 px4 py-14 border-gray-200 border-b"
+      className=" xl:px-20 md:px-10 sm:px-4 px4 py-14 border-gray-200 border-b"
       style={{
         backgroundColor: color,
       }}
     >
-      {children}
+      <div className="row max-w-[1440px] mx-auto">
+        {children}
+      </div>
     </section>
   );
 };

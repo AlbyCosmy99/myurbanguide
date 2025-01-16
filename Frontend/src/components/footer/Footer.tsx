@@ -1,10 +1,12 @@
+import SectionContainer from "../SectionContainer";
+
 const Footer = () => {
   return (
-    <footer className="py-10">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-700">
+    <footer>
+      <SectionContainer>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800">
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">Assistenza</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Assistenza</h3>
             <ul className="mt-4 space-y-2">
               <li>Centro Assistenza</li>
               <li>Antidiscriminazione</li>
@@ -15,7 +17,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">Ospitare</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Ospitare</h3>
             <ul className="mt-4 space-y-2">
               <li>Inserisci un Annuncio</li>
               <li>Per gli host</li>
@@ -28,7 +30,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-800">My Urban Guide</h3>
+            <h3 className="text-lg font-semibold text-gray-900">My Urban Guide</h3>
             <ul className="mt-4 space-y-2">
               <li>Newsroom</li>
               <li>Nuove funzionalità</li>
@@ -39,7 +41,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-gray-300 pt-4 flex flex-col md:flex-row justify-between items-center text-gray-600">
+        <div className="mt-8 border-t border-gray-300 pt-4 flex flex-col md:flex-row justify-between items-center text-gray-800">
           <p className="text-sm">© 2024 MyUrbanGuide, Inc.</p>
           <ul className="flex space-x-4 mt-4 md:mt-0 text-sm">
             <li>Privacy</li>
@@ -62,7 +64,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-      </div>
+      </SectionContainer>
     </footer>
   );
 };
