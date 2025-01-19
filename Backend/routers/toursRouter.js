@@ -5,6 +5,10 @@ import excludesRouter from "./excludesRouter.js"
 import languagesRouter from "./languagesRouter.js"
 import userToursRouter from "./userToursRouter.js"
 import mongoSanitize from 'mongo-sanitize'
+import multer from "multer"
+import { IncludesModel } from "../database/schemas/includesSchema.js"
+import { ExcludesModel } from "../database/schemas/excludesSchema.js"
+import { newExcludes, newIncludes } from "../services/toursService.js"
 
 const tourRouter = express.Router()
 
@@ -20,7 +24,6 @@ tourRouter.get('/', async (req, res) => {
         const skip = (page - 1) * limit
 
         const tours = await TourModel.find().skip(skip).limit(limit);
-
         const total = await TourModel.countDocuments();
 
         res.status(200).json({
@@ -60,32 +63,59 @@ tourRouter.delete('/:id', async (req, res) => {
     }
 })
 
-tourRouter.post("/", async (req, res) => {
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const uploadPath = "./public/Images";
+        cb(null, uploadPath);
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9) + "-";
+        cb(null, uniqueSuffix + file.originalname.replaceAll(' ', '-'));
+    }
+});
+
+const uploadImg = multer({ storage: storage }).array("photos", 12);
+
+tourRouter.post("/", uploadImg, async (req, res) => {
     const bodySanitized = mongoSanitize(req.body)
+
     try {
 
-        // const newInclude = new IncludesModel({ title })
-        // await newInclude.save()
+        const includes = JSON.parse(req.body.includes);
+        const excludes = JSON.parse(req.body.excludes);
+        const meetingPoint = JSON.parse(req.body.meeting_point);
+        const fileUploaded = req.files;
 
-        // //da aggiustare
-        // const body = {
-        //     ...bodySanitized,
-        //     includeId: newInclude._id
-        // }
+        if (!fileUploaded) {
+            return res.status(400).json({
+                message: "No file"
+            });
+        }
 
+        const includeIds = await newIncludes(includes);
+        const excludeIds = await newExcludes(excludes);
 
+        const body = {
+            ...bodySanitized,
+            includes: includeIds,
+            excludes: excludeIds,
+            featured_image: fileUploaded[0].path,
+            gallery: fileUploaded.map(file => file.path),
+            meeting_point: meetingPoint,
+        };
 
-        const newTour = new TourModel(bodySanitized)
-        await newTour.save()
-
-        return res.status(201).json(newTour)
+        const newTour = new TourModel(body);
+        await newTour.save();
+        return res.status(201).json(newTour);
 
     } catch (error) {
         return res.status(400).json({
             error: "Cannot save the tour to db.",
             details: error.message
-        })
+        });
     }
+
 })
 
 export default tourRouter;

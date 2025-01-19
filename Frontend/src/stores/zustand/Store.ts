@@ -6,7 +6,7 @@ type StoreTour = {
   tours: Tours;
   toursLoading: boolean;
   totalPages: number | null;
-  getTour: () => void;
+  getTour: (page: number | null, limit: number | null) => void;
 };
 
 const useStoreTour = create<StoreTour>(
@@ -16,10 +16,10 @@ const useStoreTour = create<StoreTour>(
       tours: [],
       totalPages: null,
       toursLoading: true,
-      getTour: async () => {
+      getTour: async (page = 1, limit = 6) => {
         try {
           set({ toursLoading: true });
-          const res = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours');
+          const res = await fetch(import.meta.env.VITE_BACKEND_URL + `tours?page=${page}&limit=${limit}`);
           console.log('res: ', res)
 
           if (!res.ok) {

@@ -13,10 +13,6 @@ type DashboardOutletContext = {
     fetchTours: () => Promise<void>;
 };
 
-type FileType = {
-    filename: string;
-};
-
 export default function NewTour() {
     const { fetchTours } = useOutletContext<DashboardOutletContext>();
 
@@ -44,20 +40,6 @@ export default function NewTour() {
     const { user } = useAuthStore()
 
     const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     const getIncludesListing = async () => {
-    //         const res = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/includes/default')
-
-    //         if (!res.ok) {
-    //             throw new Error(`HTTP error! Status: ${res.status}`);
-    //         }
-    //         const data = await res.json()
-    //         setIncludesListDefault(data)
-    //     }
-
-    //     getIncludesListing()
-    // }, [])
 
 
     /* INCLUDES */
@@ -89,6 +71,8 @@ export default function NewTour() {
         setExclusesList(exclusesList.filter((item) => item !== itemToRemove))
     };
 
+
+    /* FILE UPLOAD */
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         setDragActive(true);
@@ -124,6 +108,7 @@ export default function NewTour() {
         setUploadMessage('');
     };
 
+
     /* NUOVO TOUR */
     const SubmitNewTour = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -138,116 +123,36 @@ export default function NewTour() {
             formData.append("photos", selectedFiles[i]);
         }
 
+        formData.append("user", user?.id || "");
+        formData.append("title", tourTitle);
+        formData.append("description", tourDescription);
+        formData.append("price", String(tourPrice));
+        formData.append("duration", String(tourDuration));
+        formData.append("includes", JSON.stringify(includesList));
+        formData.append("excludes", JSON.stringify(exclusesList));
+        formData.append(
+            "meeting_point",
+            JSON.stringify({
+                latitude: latitude,
+                longitude: longitude,
+                address: address,
+            })
+        );
+
         try {
-            const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'upload', {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "tours", {
                 method: "POST",
                 body: formData,
             });
 
             if (response.ok) {
-                const data = await response.json();
-                const filenames = data.files.map((file: FileType) => file.filename);
-
-                setUploadMessage("File caricati");
-
-                const includesIds = await createIncludes(includesList);
-                const excludesIds = await createExcludes(exclusesList);
-
-                await createNewTour(filenames, includesIds, excludesIds);
-            } else {
-                setUploadMessage("Errore nel caricamento del file");
-            }
-        } catch (error) {
-            setUploadMessage("Errore nel caricamento del file");
-        }
-    };
-
-    const createIncludes = async (includesList: string[]) => {
-        try {
-            const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/includes', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    includes: includesList,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.includes
-            } else {
-                console.error("Errore nella creazione degli includes");
-                return [];
-            }
-        } catch (error) {
-            console.error("Errore nella richiesta degli includes", error);
-            return [];
-        }
-    };
-
-    const createExcludes = async (excludesList: string[]) => {
-        try {
-            const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/excludes', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    excludes: excludesList,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.excludes
-            } else {
-                console.error("Errore nella creazione degli excludes");
-                return [];
-            }
-        } catch (error) {
-            console.error("Errore nella richiesta degli excludes", error);
-            return [];
-        }
-    };
-
-    const createNewTour = async (filenames: FileType[], includesIds: string[], excludesIds: string[]) => {
-        if (user) {
-            try {
-                const tourData = {
-                    user: user.id,
-                    title: tourTitle,
-                    description: tourDescription,
-                    meeting_point: {
-                        latitude: latitude,
-                        longitude: longitude,
-                        address: address,
-                    },
-                    price: tourPrice,
-                    duration: tourDuration,
-                    gallery: filenames,
-                    featured_image: filenames[0],
-                    includes: includesIds,
-                    excludes: excludesIds,
-                }
-                console.log(tourData)
-
-                await fetch(import.meta.env.VITE_BACKEND_URL + 'tours/', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(tourData),
-                });
-
-                navigate('/dashboard');
+                navigate("/dashboard");
                 await fetchTours();
-            } catch (error) {
-                console.error(error);
+            } else {
+                console.log('impossibile creare Tour')
             }
-        } else {
-            alert('Devi essere loggato per inserire un nuovo tour');
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -398,7 +303,7 @@ export default function NewTour() {
                             <div className="sm:col-span-3">
                                 <label htmlFor="first-name" className="text-sm/6 font-medium text-gray-900 flex gap-1 items-center">
                                     <RiCloseFill size="1.6rem" className="text-red-600" /> Lista degli optional ESCLUSI dal Tour
-                                </label>
+                                    chacha        </label>
                                 <div className="mt-2 relative">
                                     <button type="button" onClick={addToExcluses} className="absolute right-1 top-1 bg-[#E29C00] px-4 py-1 rounded-xl text-white flex gap-2 items-center">
                                         Aggiungi<FaPlus aria-hidden="true" className="size-4" />

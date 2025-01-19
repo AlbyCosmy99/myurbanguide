@@ -3,6 +3,7 @@ import useStoreTour from "../../../stores/zustand/Store";
 import stringContainsAllArray from "../../../utils/stringContainsAllArray";
 import { Tour } from "../../../types/Tour";
 import LoadingIcon from "../customIcons/Loading";
+import { Link } from "react-router-dom";
 
 const SearchBar = () => {
     const { tours } = useStoreTour();
@@ -13,12 +14,16 @@ const SearchBar = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        console.log(tours)
+    }, [])
+
+    useEffect(() => {
         if (searchQuery.length > 0) {
             setLoading(true);
             const timer = setTimeout(() => {
                 const searchQueryTerms = searchQuery.toLowerCase().split(' ');
 
-                const filtered = tours.filter(tour => {
+                const filtered = tours.data.filter(tour => {
                     return stringContainsAllArray(tour.title, searchQueryTerms);
                 });
 
@@ -43,7 +48,7 @@ const SearchBar = () => {
                         id="search"
                         className="border-none outline-none bg-transparent box-shadow-none appearance-none pl-4 focus:ring-0 focus-visible:ring-0 focus:outline-none w-64 transition-all duration-300 ease-out focus:w-96"
                         onFocus={() => setIsFocused(true)}
-                        onBlur={() => setIsFocused(false)}
+                        onBlur={() => setTimeout(() => setIsFocused(false), 200)}
                         onChange={e => setSearchQuery(e.target.value)}
                         autoComplete="off"
                     />
@@ -65,18 +70,20 @@ const SearchBar = () => {
                     <p>Nessun risultato</p>
                 ) : (
                     filteredTour.map((tour, index) => (
-                        <div
-                            key={index}
-                            className="flex mb-1 items-center gap-x-3 py-2 px-2 hover:bg-gray-100 cursor-pointer rounded-lg"
-                        >
-                            <img
-                                src={`${import.meta.env.VITE_UPLOAD_URL + tour.featured_image}`}
-                                className="w-11 h-11 rounded-md object-cover"
-                            />
-                            <a className="block leading-4 text-gray-900">
-                                {tour.title}
-                            </a>
-                        </div>
+                        <Link to={'/tours/' + tour._id}>
+                            <div
+                                key={index}
+                                className="flex mb-1 items-center gap-x-3 py-2 px-2 hover:bg-gray-100 cursor-pointer rounded-lg"
+                            >
+                                <img
+                                    src={`${import.meta.env.VITE_UPLOAD_URL + tour.featured_image}`}
+                                    className="w-11 h-11 rounded-md object-cover"
+                                />
+                                <h2 className="block leading-4 text-gray-900">
+                                    {tour.title}
+                                </h2>
+                            </div>
+                        </Link>
                     ))
                 )}
             </div>

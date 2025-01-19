@@ -15,7 +15,7 @@ function Home() {
   const { tours, toursLoading, getTour } = useStoreTour();
 
   useEffect(() => {
-    getTour();
+    getTour(null, 6);
   }, []);
 
   return (

@@ -14,7 +14,7 @@ const password = encodeURIComponent(process.env.PSW_DB)
 //express-rate-limit
 const limiter = rateLimit({
     windowMs: 30 * 1000, //5 minuti,
-    max: 1, //numero massimo di richieste che si possono fare nell'arco temporale impostato
+    max: 100, //numero massimo di richieste che si possono fare nell'arco temporale impostato
     message: "Hai fatto troppe richieste in breve tempo"
 })
 

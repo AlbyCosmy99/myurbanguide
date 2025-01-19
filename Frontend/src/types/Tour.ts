@@ -27,5 +27,8 @@ export interface Tour {
 }
 
 export interface Tours {
+  page: number;
+  total: number;
+  totalPages: number;
   data: Tour[];
 }

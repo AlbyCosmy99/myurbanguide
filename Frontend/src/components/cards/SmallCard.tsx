@@ -21,7 +21,7 @@ const SmallCard: React.FC<CardProps> = ({
   id,
 }) => {
   return toursLoading ? (
-    <div className="border border-gray-300 rounded-lg h-100">
+    <div className="border border-gray-100 rounded-lg h-100">
       <div className="flex items-center justify-center h-48 bg-gray-100 rounded-md dark:bg-gray-700"></div>
       <div
         role="status"
