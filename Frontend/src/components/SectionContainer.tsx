@@ -16,9 +16,7 @@ const SectionContainer: React.FC<ContainerProps> = ({
         backgroundColor: color,
       }}
     >
-      <div className="row max-w-[1440px] mx-auto">
-        {children}
-      </div>
+      <div className="row max-w-[1440px] mx-auto">{children}</div>
     </section>
   );
 };

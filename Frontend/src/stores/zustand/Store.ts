@@ -19,22 +19,27 @@ const useStoreTour = create<StoreTour>(
       getTour: async (page = 1, limit = 6) => {
         try {
           set({ toursLoading: true });
-          const res = await fetch(import.meta.env.VITE_BACKEND_URL + `tours?page=${page}&limit=${limit}`);
-          console.log('res: ', res)
+          const res = await fetch(
+            import.meta.env.VITE_BACKEND_URL +
+              `tours?page=${page}&limit=${limit}`,
+          );
+          console.log('res: ', res);
 
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
           }
           const data = await res.json();
-          console.log(data)
-          set({ tours: data, toursLoading: false, totalPages: data.totalPages });
-
+          console.log(data);
+          set({
+            tours: data,
+            toursLoading: false,
+            totalPages: data.totalPages,
+          });
         } catch (error) {
           set({ toursLoading: true });
           console.error('Errore nella richiesta dei dati:', error);
         }
       },
-
     }),
     { name: 'tourStore' },
   ),

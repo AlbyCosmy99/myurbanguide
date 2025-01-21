@@ -16,8 +16,8 @@ import { ChevronDownIcon, MapPinIcon } from '@heroicons/react/20/solid';
 import { Link } from 'react-router-dom';
 import ModalLogin from '../../modal/ModalLogin';
 import useModalStore from '../../../stores/zustand/ModalStore';
-import SearchBar from "../../ui/searchBar/SearchBar";
-import useAuthStore from "../../../stores/zustand/AuthStore";
+import SearchBar from '../../ui/searchBar/SearchBar';
+import useAuthStore from '../../../stores/zustand/AuthStore';
 
 const products = [
   {
@@ -129,20 +129,19 @@ const NavBar = () => {
           <div className="relative flex gap-6 flex-row items-center justify-between">
             <SearchBar />
 
-            {
-              !user ?
-                <div onClick={toggleModal} className="flex flex-col items-center">
+            {!user ? (
+              <div onClick={toggleModal} className="flex flex-col items-center">
+                <RiUserSmileLine size="1.6rem" className="text-gray-700" />
+                <small className="text-gray-900">Accedi</small>
+              </div>
+            ) : (
+              <Link to="/dashboard">
+                <div className="flex flex-col items-center">
                   <RiUserSmileLine size="1.6rem" className="text-gray-700" />
-                  <small className="text-gray-900">Accedi</small>
+                  <small className="text-gray-900">Benvenuto</small>
                 </div>
-                :
-                <Link to="/dashboard">
-                  <div className="flex flex-col items-center">
-                    <RiUserSmileLine size="1.6rem" className="text-gray-700" />
-                    <small className="text-gray-900">Benvenuto</small>
-                  </div>
-                </Link>
-            }
+              </Link>
+            )}
             <div className="flex flex-col items-center">
               <RiShoppingCartLine size="1.6rem" className="text-gray-700" />
               <small className="text-gray-900">Carrello</small>

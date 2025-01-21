@@ -4,12 +4,11 @@ import { useEffect, useState } from 'react';
 import { Tour } from '../types/Tour';
 import { RiCheckFill, RiCloseFill } from 'react-icons/ri';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { HiViewGridAdd } from "react-icons/hi";
-import Lightbox from "yet-another-react-lightbox";
-import Counter from "yet-another-react-lightbox/plugins/counter";
-import "yet-another-react-lightbox/styles.css";
-import "yet-another-react-lightbox/plugins/counter.css";
-
+import { HiViewGridAdd } from 'react-icons/hi';
+import Lightbox from 'yet-another-react-lightbox';
+import Counter from 'yet-another-react-lightbox/plugins/counter';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/counter.css';
 
 interface Position {
   lat: number;
@@ -27,23 +26,21 @@ const TourSingle = () => {
   useEffect(() => {
     const getSingleTour = async () => {
       try {
-        const url = import.meta.env.VITE_BACKEND_URL + 'tours/' + tourId
+        const url = import.meta.env.VITE_BACKEND_URL + 'tours/' + tourId;
         const res = await fetch(url);
 
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data = await res.json();
-        setTour(data)
-
+        setTour(data);
       } catch (error) {
         console.error('Errore nella richiesta dei dati:', error);
       }
-    }
+    };
 
-    getSingleTour()
-  }, [])
-
+    getSingleTour();
+  }, []);
 
   useEffect(() => {
     setCenter({
@@ -51,7 +48,6 @@ const TourSingle = () => {
       lng: tour ? tour.meeting_point.longitude : 0,
     });
   }, [tour]);
-
 
   useEffect(() => {
     if (center && center.lat != 0 && center.lng != 0) {
@@ -70,7 +66,6 @@ const TourSingle = () => {
     googleMapsApiKey: 'AIzaSyCh0pCKWB2Zq5eIRgZFzqgINDRIr-KjHVw',
   });
 
-
   return !tour ? (
     <>
       <SectionContainer>
@@ -79,7 +74,6 @@ const TourSingle = () => {
           <div className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60 bg-gray-100 dark:bg-gray-700"></div>
           <div className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60 bg-gray-100 dark:bg-gray-700"></div>
         </div>
-
       </SectionContainer>
 
       <SectionContainer>
@@ -96,35 +90,42 @@ const TourSingle = () => {
         index={index}
         open={open}
         close={() => setOpen(false)}
-        slides={tour.gallery.map((image) => ({
+        slides={tour.gallery.map(image => ({
           src: import.meta.env.VITE_UPLOAD_URL + image,
         }))}
         controller={{ closeOnPullDown: true, closeOnBackdropClick: true }}
         plugins={[Counter]}
-        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
-        styles={{ container: { backgroundColor: "rgba(0, 0, 0, .8)" } }}
+        counter={{ container: { style: { top: 'unset', bottom: 0 } } }}
+        styles={{ container: { backgroundColor: 'rgba(0, 0, 0, .8)' } }}
       />
       <SectionContainer>
-        <div className="pswp-gallery grid grid-cols-3 gap-2 relative" id={tourId}>
+        <div
+          className="pswp-gallery grid grid-cols-3 gap-2 relative"
+          id={tourId}
+        >
           {tour.gallery.slice(0, 3).map((image, index) => (
             <img
               onClick={() => {
-                setIndex(index)
-                setOpen(true)
+                setIndex(index);
+                setOpen(true);
               }}
               className="h-40 w-full max-w-full rounded-lg object-cover object-center md:h-60"
-              src={import.meta.env.VITE_UPLOAD_URL + image} alt={image}
+              src={import.meta.env.VITE_UPLOAD_URL + image}
+              alt={image}
             />
           ))}
           <div className="flex flex-row gap-1 items-center bg-white px-4 py-2 rounded-full absolute bottom-2 right-2">
             <HiViewGridAdd size={18} />
-            <p onClick={() => {
-              setIndex(3)
-              setOpen(true)
-            }}>+ {tour.gallery.length - 3} foto</p>
+            <p
+              onClick={() => {
+                setIndex(3);
+                setOpen(true);
+              }}
+            >
+              + {tour.gallery.length - 3} foto
+            </p>
           </div>
         </div>
-
       </SectionContainer>
 
       <SectionContainer>
@@ -133,46 +134,40 @@ const TourSingle = () => {
         </h2>
         <p>{tour.description}</p>
         <div className="grid mt-6 grid-cols-1 md:grid-cols-2 gap-6">
-          {
-            tour.includes ?
-              <div>
-                <h3 className="text-xl font-semibold pb-4 text-[#E29C00]">
-                  Cosa è incluso
-                </h3>
-                <ul className="space-y-2">
-                  {
-                    tour.includes.map((tourIncluded, index: number) => (
-                      <li key={index} className="flex items-center">
-                        <RiCheckFill size="1.6rem" className="text-green-500" />
-                        {tourIncluded.title}
-                      </li>
-
-                    ))
-
-                  }
-                </ul>
-              </div>
-              : <></>
-          }
-          {
-            tour.excludes ?
-              <div>
-                <h3 className="text-xl font-semibold pb-4 text-[#E29C00]">
-                  Cosa è escluso
-                </h3>
-                <ul className="space-y-2">
-                  {
-                    tour.excludes.map((tourExcluded, index) => (
-                      <li key={index} className="flex items-center">
-                        <RiCloseFill size="1.6rem" className="text-red-600" />
-                        {tourExcluded.title}
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-              : <></>
-          }
+          {tour.includes ? (
+            <div>
+              <h3 className="text-xl font-semibold pb-4 text-[#E29C00]">
+                Cosa è incluso
+              </h3>
+              <ul className="space-y-2">
+                {tour.includes.map((tourIncluded, index: number) => (
+                  <li key={index} className="flex items-center">
+                    <RiCheckFill size="1.6rem" className="text-green-500" />
+                    {tourIncluded.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <></>
+          )}
+          {tour.excludes ? (
+            <div>
+              <h3 className="text-xl font-semibold pb-4 text-[#E29C00]">
+                Cosa è escluso
+              </h3>
+              <ul className="space-y-2">
+                {tour.excludes.map((tourExcluded, index) => (
+                  <li key={index} className="flex items-center">
+                    <RiCloseFill size="1.6rem" className="text-red-600" />
+                    {tourExcluded.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </SectionContainer>
       {isLoaded && !mapLoading ? (

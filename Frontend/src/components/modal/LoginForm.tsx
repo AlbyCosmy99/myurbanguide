@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
-import OauthButton from "../ui/buttons/OauthButton";
-import LoadingIcon from "../ui/customIcons/Loading";
-import useModalStore from "../../stores/zustand/ModalStore";
-import handleGoogleAuth from "../../utils/GoogleLogin";
-import handleGithubAuth from "../../utils/GithubLogin";
+import OauthButton from '../ui/buttons/OauthButton';
+import LoadingIcon from '../ui/customIcons/Loading';
+import useModalStore from '../../stores/zustand/ModalStore';
+import handleGoogleAuth from '../../utils/GoogleLogin';
+import handleGithubAuth from '../../utils/GithubLogin';
 
 interface LoginFormProps {
   changeForm: () => void;
@@ -14,58 +14,56 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
   const [type, setType] = useState('password');
-  const [email, setEmail] = useState<String>('')
-  const [password, setPassword] = useState<String>('')
-  const [errorMessage, setErrorMessage] = useState<String>('')
-  const [loading, setLoading] = useState<Boolean>(false)
+  const [email, setEmail] = useState<String>('');
+  const [password, setPassword] = useState<String>('');
+  const [errorMessage, setErrorMessage] = useState<String>('');
+  const [loading, setLoading] = useState<Boolean>(false);
 
-  const { setModalOpen } = useModalStore()
+  const { setModalOpen } = useModalStore();
 
   const changeTypePassword = () => {
     setType(type === 'password' ? 'text' : 'password');
   };
 
   const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     try {
-      setLoading(true)
-      const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'auth/login', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      setLoading(true);
+      const response = await fetch(
+        import.meta.env.VITE_BACKEND_URL + 'auth/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
         },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        }),
-      });
+      );
 
       if (!response.ok) {
-        setErrorMessage('Credenziali errate')
-        setLoading(false)
-      }
-      else {
-        const token = await response.json()
-        localStorage.setItem('token', token)
+        setErrorMessage('Credenziali errate');
+        setLoading(false);
+      } else {
+        const token = await response.json();
+        localStorage.setItem('token', token);
 
         if (token) {
-          setErrorMessage('')
-          setLoading(false)
-          setModalOpen(false)
+          setErrorMessage('');
+          setLoading(false);
+          setModalOpen(false);
           //navigate('/dashboard')
           window.location.reload();
         }
       }
-
+    } catch (error) {
+      setErrorMessage("Non è stato possibile effettuare l'accesso");
+      setLoading(false);
     }
-    catch (error) {
-      setErrorMessage('Non è stato possibile effettuare l\'accesso')
-      setLoading(false)
-    }
-
-
-  }
+  };
 
   return (
     <>
@@ -93,7 +91,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
                   required
                   autoComplete="email"
                   className="input-style"
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={event => setEmail(event.target.value)}
                 />
               </div>
             </div>
@@ -123,7 +121,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
                   required
                   autoComplete="current-password"
                   className="input-style pl-11"
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={event => setPassword(event.target.value)}
                 />
                 <div
                   onClick={changeTypePassword}
@@ -144,7 +142,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
                 className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold w-full flex justify-center items-center gap-3"
               >
                 Accedi
-                <LoadingIcon loading={true} isFocused={true} width={loading ? "18" : "0"} height="18" color="text-white" />
+                <LoadingIcon
+                  loading={true}
+                  isFocused={true}
+                  width={loading ? '18' : '0'}
+                  height="18"
+                  color="text-white"
+                />
               </button>
             </div>
           </form>
@@ -159,7 +163,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changeForm }) => {
             </a>
           </p>
           <div className="mt-6">
-            <OauthButton onClick={handleGoogleAuth} >
+            <OauthButton onClick={handleGoogleAuth}>
               <FcGoogle />
               Accedi con Google
             </OauthButton>

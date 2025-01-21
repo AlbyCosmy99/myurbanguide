@@ -7,7 +7,7 @@ type ModalStoreState = {
 type ModalStoreAction = {
   toggleModal: () => void;
   setModalOpen: (modalOpen: ModalStoreState['modalOpen']) => void;
-}
+};
 
 const useModalStore = create<ModalStoreState & ModalStoreAction>(
   //@ts-ignore
@@ -15,7 +15,7 @@ const useModalStore = create<ModalStoreState & ModalStoreAction>(
     modalOpen: false,
     toggleModal: () => set((state: any) => ({ modalOpen: !state.modalOpen })),
     setModalOpen: (modalOpen: boolean) => set(() => ({ modalOpen: modalOpen })),
-  })
+  }),
 );
 
 export default useModalStore;

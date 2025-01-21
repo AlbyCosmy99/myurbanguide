@@ -2,7 +2,7 @@ import '../../App.css';
 import SectionContainer from '../../components/SectionContainer';
 import SmallCard from '../../components/cards/SmallCard';
 import useStoreTour from '../../stores/zustand/Store';
-import Slider from '../../components/slider/Slider'
+import Slider from '../../components/slider/Slider';
 import { useEffect } from 'react';
 import LocationCard from '../../components/cards/LocationCard';
 import img1 from '../../../src/assets/img/Airbnb-1.webp';
@@ -157,7 +157,6 @@ function Home() {
           </div>
         </div>
       </SectionContainer>
-
     </>
   );
 }

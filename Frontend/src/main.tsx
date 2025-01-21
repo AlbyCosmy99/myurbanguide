@@ -7,14 +7,14 @@ import TourSingle from './pages/TourSingle.tsx';
 import { ThemeProvider } from '@material-tailwind/react';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import NewTour from "./pages/NewTour.tsx";
-import DashboardBody from "./components/navigation/DashboardBody.tsx";
-import SuccessGithubAuth from "./pages/SuccessGithubAuth.tsx";
-import SuccessGoogleAuth from "./pages/SuccessGoogleAuth.tsx";
+import NewTour from './pages/NewTour.tsx';
+import DashboardBody from './components/navigation/DashboardBody.tsx';
+import SuccessGithubAuth from './pages/SuccessGithubAuth.tsx';
+import SuccessGoogleAuth from './pages/SuccessGoogleAuth.tsx';
 
-const Home = lazy(() => import('./pages/home/Home.tsx'))
-const Tours = lazy(() => import("./pages/Tours.tsx"))
-const DashBoard = lazy(() => import("./pages/DashBoard.tsx"))
+const Home = lazy(() => import('./pages/home/Home.tsx'));
+const Tours = lazy(() => import('./pages/Tours.tsx'));
+const DashBoard = lazy(() => import('./pages/DashBoard.tsx'));
 
 const router = createBrowserRouter([
   {
@@ -23,15 +23,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Suspense><Home /></Suspense>,
+        element: (
+          <Suspense>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         path: '/google/success',
-        element: <SuccessGoogleAuth />
+        element: <SuccessGoogleAuth />,
       },
       {
         path: '/github/success',
-        element: <SuccessGithubAuth />
+        element: <SuccessGithubAuth />,
       },
       {
         path: '/tours/',
@@ -43,17 +47,21 @@ const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Suspense><DashBoard /></Suspense>,
+        element: (
+          <Suspense>
+            <DashBoard />
+          </Suspense>
+        ),
         children: [
           {
             path: '',
-            element: <DashboardBody />
+            element: <DashboardBody />,
           },
           {
             path: 'nuovo-tour',
-            element: <NewTour />
+            element: <NewTour />,
           },
-        ]
+        ],
       },
     ],
   },

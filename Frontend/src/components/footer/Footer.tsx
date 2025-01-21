@@ -1,4 +1,4 @@
-import SectionContainer from "../SectionContainer";
+import SectionContainer from '../SectionContainer';
 
 const Footer = () => {
   return (
@@ -30,7 +30,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">My Urban Guide</h3>
+            <h3 className="text-lg font-semibold text-gray-900">
+              My Urban Guide
+            </h3>
             <ul className="mt-4 space-y-2">
               <li>Newsroom</li>
               <li>Nuove funzionalità</li>

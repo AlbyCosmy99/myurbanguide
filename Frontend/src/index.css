@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer components {
-    .input-style {
-        @apply block rounded-2xl w-full border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-[#E29C00] sm:text-sm/6 autofill:bg-white autofill:shadow-sm autofill:border-white border-none outline-none bg-transparent appearance-none  focus:outline-none
-    }
+  .input-style {
+    @apply block rounded-2xl w-full border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-[#E29C00] sm:text-sm/6 autofill:bg-white autofill:shadow-sm autofill:border-white border-none outline-none bg-transparent appearance-none  focus:outline-none;
+  }
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -14,10 +14,11 @@ input:-webkit-autofill:active {
   /* Revert text color */
   background-color: white !important;
   border-color: white !important;
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)!important;
-  color: rgb(33 33 33 / var(--tw-text-opacity))!important;
-  -webkit-text-fill-color: rgb(33 33 33 / var(--tw-text-opacity))!important;
-  border: none!important;
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000) !important;
+  color: rgb(33 33 33 / var(--tw-text-opacity)) !important;
+  -webkit-text-fill-color: rgb(33 33 33 / var(--tw-text-opacity)) !important;
+  border: none !important;
   /* Revert background color */
   transition: background-color 5000s ease-in-out 0s;
 }

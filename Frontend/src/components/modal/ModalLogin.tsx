@@ -6,7 +6,7 @@ import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import useModalStore from '../../stores/zustand/ModalStore';
 
-const ModalLogin = ({ }) => {
+const ModalLogin = ({}) => {
   const { modalOpen, setModalOpen } = useModalStore();
   const [formAction, setFormAction] = useState('login');
 

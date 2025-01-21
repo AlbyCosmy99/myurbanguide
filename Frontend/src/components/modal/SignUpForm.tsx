@@ -1,10 +1,10 @@
 import { FaGithub, FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import OauthButton from "../ui/buttons/OauthButton";
-import { useState } from "react";
-import LoadingIcon from "../ui/customIcons/Loading";
-import useModalStore from "../../stores/zustand/ModalStore";
-import handleGoogleAuth from "../../utils/GoogleLogin";
+import OauthButton from '../ui/buttons/OauthButton';
+import { useState } from 'react';
+import LoadingIcon from '../ui/customIcons/Loading';
+import useModalStore from '../../stores/zustand/ModalStore';
+import handleGoogleAuth from '../../utils/GoogleLogin';
 
 interface SignUpFormProps {
   changeForm: () => void;
@@ -12,59 +12,58 @@ interface SignUpFormProps {
 
 const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
   const [type, setType] = useState('password');
-  const [username, setUsername] = useState<String>('')
-  const [email, setEmail] = useState<String>('')
-  const [password, setPassword] = useState<String>('')
-  const [passwordRepeat, setPasswordRepeat] = useState<String>('')
-  const [errorMessage, setErrorMessage] = useState<String>('')
-  const [loading, setLoading] = useState<Boolean>(false)
+  const [username, setUsername] = useState<String>('');
+  const [email, setEmail] = useState<String>('');
+  const [password, setPassword] = useState<String>('');
+  const [passwordRepeat, setPasswordRepeat] = useState<String>('');
+  const [errorMessage, setErrorMessage] = useState<String>('');
+  const [loading, setLoading] = useState<Boolean>(false);
 
-  const { setModalOpen } = useModalStore()
+  const { setModalOpen } = useModalStore();
 
   const signUpUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (passwordRepeat != password) {
-      setErrorMessage('Le password non coincidono')
-    }
-    else {
-
+      setErrorMessage('Le password non coincidono');
+    } else {
       try {
-        setLoading(true)
-        const response = await fetch(import.meta.env.VITE_BACKEND_URL + 'auth/register', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        setLoading(true);
+        const response = await fetch(
+          import.meta.env.VITE_BACKEND_URL + 'auth/register',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username: username,
+              email: email,
+              password: password,
+            }),
           },
-          body: JSON.stringify({
-            username: username,
-            email: email,
-            password: password
-          }),
-        });
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const token = await response.json()
-        localStorage.setItem('token', token)
+        const token = await response.json();
+        localStorage.setItem('token', token);
 
         if (token) {
           //navigate('/dashboard')
         }
 
-        setErrorMessage('')
-        setLoading(false)
-        setModalOpen(false)
-      }
-      catch (error) {
-        setErrorMessage('Utente già registrato')
-        setLoading(false)
+        setErrorMessage('');
+        setLoading(false);
+        setModalOpen(false);
+      } catch (error) {
+        setErrorMessage('Utente già registrato');
+        setLoading(false);
       }
     }
-  }
-
+  };
 
   const changeTypePassword = () => {
     setType(type === 'password' ? 'text' : 'password');
@@ -95,7 +94,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   type="text"
                   required
                   className="input-style"
-                  onChange={(event) => setUsername(event.target.value)}
+                  onChange={event => setUsername(event.target.value)}
                 />
               </div>
             </div>
@@ -113,7 +112,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   required
                   autoComplete="email"
                   className="input-style"
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={event => setEmail(event.target.value)}
                 />
               </div>
             </div>
@@ -134,7 +133,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   required
                   autoComplete="current-password"
                   className="input-style pl-11"
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={event => setPassword(event.target.value)}
                 />
                 <div
                   onClick={changeTypePassword}
@@ -147,7 +146,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   )}
                 </div>
               </div>
-
             </div>
 
             <div>
@@ -166,7 +164,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   required
                   autoComplete="current-password"
                   className="input-style pl-11"
-                  onChange={(event) => setPasswordRepeat(event.target.value)}
+                  onChange={event => setPasswordRepeat(event.target.value)}
                 />
                 <div
                   onClick={changeTypePassword}
@@ -179,7 +177,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                   )}
                 </div>
               </div>
-
             </div>
             <p className="text-red-800 text-sm font-semibold">{errorMessage}</p>
             <div>
@@ -188,8 +185,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
                 className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold w-full flex justify-center items-center gap-3"
               >
                 Registrati
-                <LoadingIcon loading={true} isFocused={true} width={loading ? "18" : "0"} height="18" color="text-white" />
-
+                <LoadingIcon
+                  loading={true}
+                  isFocused={true}
+                  width={loading ? '18' : '0'}
+                  height="18"
+                  color="text-white"
+                />
               </button>
             </div>
           </form>
@@ -210,7 +212,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
             </OauthButton>
           </div>
           <div className="mt-1">
-            <OauthButton onClick={() => { }}>
+            <OauthButton onClick={() => {}}>
               <FaGithub />
               Accedi con GitHub
             </OauthButton>

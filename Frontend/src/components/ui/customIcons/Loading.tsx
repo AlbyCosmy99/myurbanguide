@@ -3,10 +3,16 @@ interface LoadingIconProps {
   isFocused?: boolean;
   width: string;
   height: string;
-  color?: string
+  color?: string;
 }
 
-const LoadingIcon: React.FC<LoadingIconProps> = ({ loading, isFocused, width, height, color = "text-gray-900" }) => {
+const LoadingIcon: React.FC<LoadingIconProps> = ({
+  loading,
+  isFocused,
+  width,
+  height,
+  color = 'text-gray-900',
+}) => {
   return (
     <div className="grid place-items-center overflow-x-scroll rounded-lg lg:overflow-visible">
       <svg
