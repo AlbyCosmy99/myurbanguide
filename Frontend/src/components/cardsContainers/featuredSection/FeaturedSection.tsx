@@ -1,27 +1,9 @@
-import { useEffect, useState } from 'react';
 import SectionContainer from '../../SectionContainer';
 import SmallCard from '../../cards/SmallCard';
-import Tour from '../../../types/Tour';
+import useStoreTour from "../../../stores/zustand/Store";
 
 const FeaturedSection = () => {
-  const [tours, setTours] = useState<Tour[]>([]);
-  const [toursLoading, setToursLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('../src/assets/data/tours.json')
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error('Request error');
-      })
-      .then(res => {
-        setTours(res.tours);
-        setTimeout(() => {
-          setToursLoading(false);
-        }, 3000);
-      });
-  }, []);
+  const { tours, toursLoading } = useStoreTour();
 
   return (
     <div className="w-full pb-10">
@@ -30,15 +12,16 @@ const FeaturedSection = () => {
           Annunci in evidenza
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {tours.map(tour => (
+          {tours.data.map(tour => (
             <SmallCard
-              key={tour.id}
+              key={tour._id}
               toursLoading={toursLoading}
               title={tour.title}
               description={tour.description}
               price={tour.price}
-              image={tour.image}
+              image={tour.featured_image}
               duration={tour.duration}
+              id={tour._id}
             />
           ))}
         </div>
