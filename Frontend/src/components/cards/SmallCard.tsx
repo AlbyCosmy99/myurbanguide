@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo_my from '../../../src/assets/img/logo-ico.png';
 
 interface CardProps {
   id: string;
@@ -64,7 +65,7 @@ const SmallCard: React.FC<CardProps> = ({
           <div className="flex items-center mt-4">
             <img
               className="w-10 h-10 rounded-full me-3"
-              src="/src/assets/img/logo-ico.png"
+              src={logo_my}
               alt="ico-user"
             />
             <div>
