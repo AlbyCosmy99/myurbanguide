@@ -27,18 +27,20 @@ function Home() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {tours.data.map(tour => (
-            <SmallCard
-              key={tour._id}
-              toursLoading={toursLoading}
-              title={tour.title}
-              description={tour.description}
-              price={tour.price}
-              image={tour.featured_image}
-              duration={tour.duration}
-              id={tour._id}
-            />
-          ))}
+            {tours && tours.data ? (
+              tours.data.map(tour => (
+                <SmallCard
+                  key={tour._id}
+                  toursLoading={toursLoading}
+                  title={tour.title}
+                  description={tour.description}
+                  price={tour.price}
+                  image={tour.featured_image}
+                  duration={tour.duration}
+                  id={tour._id}
+                />
+              ))
+            ) : null}
         </div>
       </SectionContainer>
       <SectionContainer>
