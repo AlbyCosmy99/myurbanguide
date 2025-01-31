@@ -4,18 +4,15 @@ import stringContainsAllArray from '../../../utils/stringContainsAllArray';
 import { Tour } from '../../../types/Tour';
 import LoadingIcon from '../customIcons/Loading';
 import { Link } from 'react-router-dom';
+import useSearchStore from "../../../stores/zustand/SearchStore";
 
 const SearchBar = () => {
   const { tours } = useStoreTour();
+  const { isSearchFocused, setIsSearchFocused } = useSearchStore();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredTour, setFilteredTour] = useState<Tour[]>([]);
-  const [isFocused, setIsFocused] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    console.log(tours);
-  }, []);
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -39,21 +36,22 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="flex border-0 py-1 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 rounded-full">
+      <div className="hidden lg:flex border-0 py-1 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 rounded-full">
         <form className="flex gap-2">
           <input
             type="text"
             name="search"
             id="search"
-            className="border-none outline-none bg-transparent box-shadow-none appearance-none pl-4 focus:ring-0 focus-visible:ring-0 focus:outline-none w-64 transition-all duration-300 ease-out focus:w-96"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+            className="border-none outline-none bg-transparent box-shadow-none appearance-none pl-4 focus:ring-0 focus-visible:ring-0 focus:outline-none w-28 2xl:w-48 transition-all duration-300 ease-out focus:w-96"
+            onFocus={() => setIsSearchFocused(true)}
+            onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
             onChange={e => setSearchQuery(e.target.value)}
             autoComplete="off"
+            placeholder="Cerca Tour..."
           />
           <LoadingIcon
             loading={loading}
-            isFocused={isFocused}
+            isFocused={isSearchFocused}
             width="24"
             height="24"
           />
@@ -66,7 +64,7 @@ const SearchBar = () => {
       </div>
 
       <div
-        className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isFocused ? 'visible' : 'hidden'}`}
+        className={`absolute top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-300 transition p-4 ${!loading && isSearchFocused ? 'visible' : 'hidden'}`}
       >
         {searchQuery.length === 0 ? (
           <p>Inizia a digita per trovare un Tour</p>

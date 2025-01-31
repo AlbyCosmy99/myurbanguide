@@ -100,7 +100,7 @@ const TourSingle = () => {
       />
       <SectionContainer>
         <div
-          className="pswp-gallery grid grid-cols-3 gap-2 relative"
+          className="pswp-gallery grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 relative"
           id={tourId}
         >
           {tour.gallery.slice(0, 3).map((image, index) => (

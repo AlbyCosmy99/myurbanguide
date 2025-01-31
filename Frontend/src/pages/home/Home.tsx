@@ -27,20 +27,20 @@ function Home() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {tours && tours.data ? (
-              tours.data.map(tour => (
-                <SmallCard
-                  key={tour._id}
-                  toursLoading={toursLoading}
-                  title={tour.title}
-                  description={tour.description}
-                  price={tour.price}
-                  image={tour.featured_image}
-                  duration={tour.duration}
-                  id={tour._id}
-                />
-              ))
-            ) : null}
+          {tours && tours.data ? (
+            tours.data.map(tour => (
+              <SmallCard
+                key={tour._id}
+                toursLoading={toursLoading}
+                title={tour.title}
+                description={tour.description}
+                price={tour.price}
+                image={tour.featured_image}
+                duration={tour.duration}
+                id={tour._id}
+              />
+            ))
+          ) : null}
         </div>
       </SectionContainer>
       <SectionContainer>
@@ -48,7 +48,7 @@ function Home() {
           Ispirazione per il tuo prossimo viaggio
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
           <LocationCard
             local_id="verona"
             img={img1}
@@ -100,7 +100,7 @@ function Home() {
         </div>
       </SectionContainer>
       <SectionContainer color={'#e29c0017'}>
-        <div className="flex items-center">
+        <div className="flex items-center flex-col md:flex-row gap-9">
           <div className="md:w-1/2 text-center md:text-left">
             <h2 className="text-3xl font-bold text-[#E29C00] mb-4">
               Iscriviti alla Newsletter My Urban Guide

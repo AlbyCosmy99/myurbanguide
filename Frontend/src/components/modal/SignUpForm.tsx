@@ -182,7 +182,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
             <div>
               <button
                 type="submit"
-                className="bg-[#E29C00] py-2 px-6 text-white rounded-full font-bold w-full flex justify-center items-center gap-3"
+                className="bg-[#E29C00] py-2 px-6 text-white rounded-2xl font-bold w-full flex justify-center items-center gap-3"
               >
                 Registrati
                 <LoadingIcon
@@ -212,7 +212,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ changeForm }) => {
             </OauthButton>
           </div>
           <div className="mt-1">
-            <OauthButton onClick={() => {}}>
+            <OauthButton onClick={() => { }}>
               <FaGithub />
               Accedi con GitHub
             </OauthButton>
