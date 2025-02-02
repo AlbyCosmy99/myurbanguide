@@ -5,9 +5,9 @@ import { UserModel } from "../database/schemas/userSchema.js"
 const googleRouter = express.Router()
 
 const clientId = process.env.GOOGLE_CLIENT_ID
-const url = process.env.GOOGLE_CALLBACK_URL
+const url = process.env.NODE_ENV === 'production' ? process.env.PROD_GOOGLE_CALLBACK_URL : process.env.DEV_GOOGLE_CALLBACK_URL;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET
-const googleSuccess = process.env.GOOGLE_SUCCESS
+const googleSuccess = process.env.NODE_ENV === 'production' ? process.env.PROD_GOOGLE_SUCCESS : process.env.DEV_GOOGLE_SUCCESS;
 
 googleRouter.get('/', (req, res) => {
 

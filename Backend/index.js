@@ -10,7 +10,8 @@ const port = 3030
 
 const username = encodeURIComponent(process.env.USR_DB)
 const password = encodeURIComponent(process.env.PSW_DB)
-
+console.log('USR_DB:', process.env.USR_DB);
+console.log('PSW_DB:', process.env.PSW_DB);
 //express-rate-limit
 const limiter = rateLimit({
     windowMs: 30 * 1000, //5 minuti,

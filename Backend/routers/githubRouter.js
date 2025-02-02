@@ -5,7 +5,7 @@ const githubRouter = express.Router();
 
 const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
 const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
-const callbackUrl = process.env.OAUTH_GITHUB_CALLBACK_URL;
+const callbackUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_OAUTH_GITHUB_CALLBACK_URL : process.env.DEV_OAUTH_GITHUB_CALLBACK_URL;
 
 githubRouter.get("/", (req, res) => {
     const params = new URLSearchParams({

@@ -11,9 +11,9 @@ import NewTour from './pages/NewTour.tsx';
 import DashboardBody from './components/navigation/DashboardBody.tsx';
 import SuccessGithubAuth from './pages/SuccessGithubAuth.tsx';
 import SuccessGoogleAuth from './pages/SuccessGoogleAuth.tsx';
+import Tours from "./pages/Tours.tsx";
 
 const Home = lazy(() => import('./pages/home/Home.tsx'));
-const Tours = lazy(() => import('./pages/Tours.tsx'));
 const DashBoard = lazy(() => import('./pages/DashBoard.tsx'));
 
 const router = createBrowserRouter([
