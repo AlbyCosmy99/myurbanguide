@@ -105,6 +105,7 @@ const TourSingle = () => {
         >
           {tour.gallery.slice(0, 3).map((image, index) => (
             <img
+              key={index}
               onClick={() => {
                 setIndex(index);
                 setOpen(true);
@@ -114,7 +115,7 @@ const TourSingle = () => {
               alt={image}
             />
           ))}
-          <div className="flex flex-row gap-1 items-center bg-white px-4 py-2 rounded-full absolute bottom-2 right-2">
+          <div className="flex flex-row gap-1 items-center bg-white px-4 py-2 rounded-2xl absolute bottom-2 right-2">
             <HiViewGridAdd size={18} />
             <p
               onClick={() => {
