@@ -3,8 +3,8 @@ import { UserModel } from "../database/schemas/userSchema.js";
 
 const githubRouter = express.Router();
 
-const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
-const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
+const clientId = process.env.NODE_ENV === 'production' ? process.env.PROD_OAUTH_GITHUB_CLIENT_ID : process.env.DEV_OAUTH_GITHUB_CLIENT_ID;
+const clientSecret = process.env.NODE_ENV === 'production' ? process.env.PROD_OAUTH_GITHUB_CLIENT_SECRET : process.env.DEV_OAUTH_GITHUB_CLIENT_SECRET;
 const callbackUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_OAUTH_GITHUB_CALLBACK_URL : process.env.DEV_OAUTH_GITHUB_CALLBACK_URL;
 
 githubRouter.get("/", (req, res) => {
