@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SectionContainer from '../SectionContainer';
+import { startTransition } from "react";
 
 const Slider = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full bg-[url('/src/assets/img/slide_bg.jpg')] bg-center bg-no-repeat bg-cover">
       <SectionContainer>
@@ -14,7 +17,14 @@ const Slider = () => {
               My Urban Guide
             </h1>
             <Link to="/tours">
-              <button className="text-[#E29C00] bg-white px-10 py-4 shadow-md rounded-full font-bold my-3 hover:shadow-xl active:scale-90 transition duration-150">
+              <button
+                className="text-[#E29C00] bg-white px-10 py-4 shadow-md rounded-full font-bold my-3 hover:shadow-xl active:scale-90 transition duration-150"
+                onClick={() => {
+                  startTransition(() => {
+                    navigate('/tours');
+                  });
+                }}
+              >
                 Scopri tutti i tour
               </button>
             </Link>

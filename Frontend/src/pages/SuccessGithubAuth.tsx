@@ -19,7 +19,7 @@ const SuccessGithubAuth = () => {
       console.log(code);
       try {
         const response = await fetch(
-          'http://localhost:3030/api/auth/github/callback',
+          import.meta.env.VITE_BACKEND_URL + 'auth/github/callback',
           {
             method: 'POST',
             headers: {

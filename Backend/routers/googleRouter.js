@@ -7,6 +7,7 @@ const googleRouter = express.Router()
 const clientId = process.env.GOOGLE_CLIENT_ID
 const url = process.env.GOOGLE_CALLBACK_URL
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+const googleSuccess = process.env.GOOGLE_SUCCESS
 
 googleRouter.get('/', (req, res) => {
 
@@ -40,7 +41,7 @@ googleRouter.get('/callback', async (req, res) => {
 
         const existingUser = await UserModel.findOne({ email: user.email });
         if (existingUser) {
-            return res.redirect('http://localhost:5173/google/success?token=' + token + '&id=' + existingUser._id + '&username=' + existingUser.username + '&email=' + existingUser.email);
+            return res.redirect(googleSuccess + '?token=' + token + '&id=' + existingUser._id + '&username=' + existingUser.username + '&email=' + existingUser.email);
         }
 
         const newUser = new UserModel({
@@ -50,7 +51,7 @@ googleRouter.get('/callback', async (req, res) => {
         });
         await newUser.save();
 
-        res.redirect('http://localhost:5173/google/success?token=' + token + '&id=' + newUser._id + '&name=' + newUser.username + '&email=' + newUser.email);
+        res.redirect(googleSuccess + '?token=' + token + '&id=' + newUser._id + '&name=' + newUser.username + '&email=' + newUser.email);
     } catch (error) {
         console.error('Error during Google OAuth callback:', error);
         res.status(500).send('Internal Server Error');
