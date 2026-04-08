@@ -9,8 +9,8 @@ services:
       - mongo-data:/data/db
     restart: unless-stopped
 
-  backend:
-    build: ./Backend
+  app:
+    build: .
     ports:
       - "3030:3030"
     environment:
@@ -18,18 +18,6 @@ services:
       - MONGODB_URI=mongodb://mongo:27017/myurbanguide
     depends_on:
       - mongo
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./Frontend
-      args:
-        - VITE_BACKEND_URL=http://localhost:3030/api/
-        - VITE_UPLOAD_URL=http://localhost:3030/
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
     restart: unless-stopped
 
 volumes:
