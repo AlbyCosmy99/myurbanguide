@@ -25,7 +25,10 @@ export interface Tour {
   includes: TourIncluded[];
   excludes: TourExcluded[];
   meeting_point: MeetingPoint;
-  additional_info?: string;
+  additional_info?: {
+    group_size?: string;
+    [key: string]: any;
+  };
   highlights?: string[];
 }
 
