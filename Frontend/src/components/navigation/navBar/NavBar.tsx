@@ -148,10 +148,12 @@ const NavBar = () => {
                 </div>
               </Link>
             )}
-            <div className="flex flex-col items-center">
-              <RiShoppingCartLine size="1.6rem" className="text-gray-700" />
-              <small className="text-gray-900">Carrello</small>
-            </div>
+            <Link to="/carrello">
+              <div className="flex flex-col items-center hover:cursor-pointer hover:text-[#E29C00]">
+                <RiShoppingCartLine size="1.6rem" className="text-gray-700 hover:text-[#E29C00] transition duration-200" />
+                <small className="text-gray-900">Carrello</small>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

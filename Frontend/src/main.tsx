@@ -42,6 +42,18 @@ const router = createBrowserRouter([
         element: <Tours />,
       },
       {
+        path: '/diventa-partner',
+        element: <div className="py-32 text-center text-gray-700"><h1 className="text-4xl font-bold text-[#E29C00]">Diventa Partner</h1><p className="mt-4 text-lg">Questa sezione sarà presto disponibile!</p></div>,
+      },
+      {
+        path: '/assistenza',
+        element: <div className="py-32 text-center text-gray-700"><h1 className="text-4xl font-bold text-[#E29C00]">Assistenza</h1><p className="mt-4 text-lg">Il nostro supporto clienti sarà presto online.</p></div>,
+      },
+      {
+        path: '/carrello',
+        element: <div className="py-32 text-center text-gray-700"><h1 className="text-4xl font-bold text-[#E29C00]">Carrello Vuoto</h1><p className="mt-4 text-lg">Non hai ancora aggiunto tour al carrello.</p></div>,
+      },
+      {
         path: '/tours/:tourId',
         element: <TourSingle />,
       },

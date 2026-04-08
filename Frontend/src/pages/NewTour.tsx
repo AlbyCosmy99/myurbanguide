@@ -186,7 +186,7 @@ export default function NewTour() {
             </p>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label
                   htmlFor="first-name"
                   className="block text-sm/6 font-medium text-gray-900"
@@ -213,7 +213,7 @@ export default function NewTour() {
                 </div>
               </div>
 
-              <div className="sm:col-span-1">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="price"
                   className="block text-sm/6 font-medium text-gray-900"
@@ -232,7 +232,7 @@ export default function NewTour() {
                   />
                 </div>
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="duration"
                   className="block text-sm/6 font-medium text-gray-900"
@@ -301,7 +301,7 @@ export default function NewTour() {
                   className="text-sm/6 font-medium text-gray-900 flex gap-1 items-center"
                 >
                   <RiCloseFill size="1.6rem" className="text-red-600" /> Lista
-                  degli optional ESCLUSI dal Tour chacha{' '}
+                  degli optional ESCLUSI dal Tour
                 </label>
                 <div className="mt-2 relative">
                   <button
