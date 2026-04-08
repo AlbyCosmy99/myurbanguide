@@ -55,18 +55,7 @@ const HeadersDashboard: React.FC<HeadersDashboardProps> = ({
         </div>
       </div>
       <div className="mt-5 flex lg:ml-4 lg:mt-0">
-        <span className="hidden sm:block">
-          <button
-            type="button"
-            className="inline-flex items-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          >
-            <PencilIcon
-              aria-hidden="true"
-              className="-ml-0.5 mr-1.5 size-4 text-gray-400"
-            />
-            Modifica profilo
-          </button>
-        </span>
+
 
         <span className="ml-3 hidden sm:block">
           <button

@@ -8,10 +8,7 @@ import rateLimit from "express-rate-limit"
 const server = express()
 const port = 3030
 
-const username = encodeURIComponent(process.env.USR_DB)
-const password = encodeURIComponent(process.env.PSW_DB)
-console.log('USR_DB:', process.env.USR_DB);
-console.log('PSW_DB:', process.env.PSW_DB);
+// Using connection string from env or local default
 //express-rate-limit
 const limiter = rateLimit({
     windowMs: 30 * 1000, //5 minuti,
@@ -27,7 +24,7 @@ server.use('/api', apiRouter)
 
 server.use('/public', express.static('public'));
 
-const mongouri = `mongodb+srv://${username}:${password}@cluster0.rbaal.mongodb.net/myurbanguide`
+const mongouri = process.env.MONGODB_URI || 'mongodb://localhost:27017/myurbanguide'
 
 mongoose.connect(mongouri)
     .then(() => {

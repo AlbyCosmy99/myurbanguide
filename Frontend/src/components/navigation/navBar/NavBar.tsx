@@ -117,18 +117,18 @@ const NavBar = () => {
                   </PopoverPanel>
                 </Popover>
 
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900 focus:outline-none"
+                <Link
+                  to="/diventa-partner"
+                  className="text-sm font-semibold leading-6 text-gray-900 focus:outline-none hover:text-[#E29C00] transition duration-200"
                 >
                   Diventa Partner
-                </a>
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900 focus:outline-none"
+                </Link>
+                <Link
+                  to="/assistenza"
+                  className="text-sm font-semibold leading-6 text-gray-900 focus:outline-none hover:text-[#E29C00] transition duration-200"
                 >
                   Assistenza
-                </a>
+                </Link>
               </PopoverGroup>
               : ''
           }

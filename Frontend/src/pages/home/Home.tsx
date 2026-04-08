@@ -73,30 +73,6 @@ function Home() {
             distance="200 chilometri di distanza"
             location="Bologna"
           />
-          <LocationCard
-            local_id="verona"
-            img={img1}
-            distance="200 chilometri di distanza"
-            location="Verona"
-          />
-          <LocationCard
-            local_id="venezia"
-            img={img2}
-            distance="200 chilometri di distanza"
-            location="Venezia"
-          />
-          <LocationCard
-            local_id="bormio"
-            img={img3}
-            distance="200 chilometri di distanza"
-            location="Bormio"
-          />
-          <LocationCard
-            local_id="bologna"
-            img={img4}
-            distance="200 chilometri di distanza"
-            location="Bologna"
-          />
         </div>
       </SectionContainer>
       <SectionContainer color={'#e29c0017'}>

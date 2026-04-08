@@ -51,7 +51,7 @@ googleRouter.get('/callback', async (req, res) => {
         });
         await newUser.save();
 
-        res.redirect(googleSuccess + '?token=' + token + '&id=' + newUser._id + '&name=' + newUser.username + '&email=' + newUser.email);
+        res.redirect(googleSuccess + '?token=' + token + '&id=' + newUser._id + '&username=' + newUser.username + '&email=' + newUser.email);
     } catch (error) {
         console.error('Error during Google OAuth callback:', error);
         res.status(500).send('Internal Server Error');
