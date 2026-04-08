@@ -2,10 +2,7 @@
 import logo from '../../../assets/svg/logo.svg';
 import { RiUserSmileLine } from 'react-icons/ri';
 import { RiShoppingCartLine } from 'react-icons/ri';
-import img1 from '../../../assets/img/Airbnb-1.webp';
-import img2 from '../../../assets/img/Airbnb-2.webp';
-import img3 from '../../../assets/img/Airbnb-3.webp';
-import img4 from '../../../assets/img/Airbnb-4.webp';
+
 import {
   Popover,
   PopoverButton,
