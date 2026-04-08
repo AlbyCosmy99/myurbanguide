@@ -3,7 +3,7 @@ import useStoreTour from '../../../stores/zustand/Store';
 import stringContainsAllArray from '../../../utils/stringContainsAllArray';
 import { Tour } from '../../../types/Tour';
 import LoadingIcon from '../customIcons/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useSearchStore from "../../../stores/zustand/SearchStore";
 
 const SearchBar = () => {
@@ -13,6 +13,17 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredTour, setFilteredTour] = useState<Tour[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSearchFocused(false);
+    if (searchQuery.trim().length > 0) {
+      navigate(`/tours?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      navigate(`/tours`);
+    }
+  };
 
   useEffect(() => {
     if (searchQuery.length > 0) {
@@ -37,7 +48,7 @@ const SearchBar = () => {
   return (
     <>
       <div className="hidden lg:flex border-0 py-1 px-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 rounded-[20px]">
-        <form className="flex gap-2">
+        <form className="flex gap-2" onSubmit={handleSubmit}>
           <input
             type="text"
             name="search"
