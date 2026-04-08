@@ -74,10 +74,10 @@ async function seed() {
         includes: [incGuida._id, incBiglietti._id],
         excludes: [excMancia._id, excPasti._id],
         highlights: ["Accesso prioritario", "Guida esperta locale", "Aneddoti sui gladiatori"],
-        featured_image: "public/Images/1735857037937-109818655-97-(1).jpg",
+        featured_image: "public/Images/rome_main_1775668370666.png",
         gallery: [
-          "public/Images/1735857037939-266261422-97.jpg",
-          "public/Images/1735857037939-428688193-98.jpg"
+          "public/Images/rome_gallery_1_1775668387937.png",
+          "public/Images/rome_gallery_2_1775668409504.png"
         ],
         additional_info: {
           group_size: "Massimo 12 persone",
@@ -105,10 +105,10 @@ async function seed() {
         includes: [incGuida._id, incCibo._id],
         excludes: [excMancia._id, excVolo._id],
         highlights: ["Degustazione di 5 specialità locali", "Misteri di Spaccanapoli", "Chiese esoteriche"],
-        featured_image: "public/Images/1735857037940-572350307-147.jpg",
+        featured_image: "public/Images/naples_main_1775670793909.png",
         gallery: [
-          "public/Images/1735857037940-633348530-147-(1).jpg",
-          "public/Images/1735937590491-839402269-98.jpg"
+          "public/Images/naples_gallery_1_1775670817524.png",
+          "public/Images/naples_gallery_2_1775670837080.png"
         ],
         additional_info: {
           group_size: "Massimo 8 persone",
