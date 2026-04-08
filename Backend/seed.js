@@ -136,10 +136,10 @@ async function seed() {
         includes: [incGuida._id, incCibo._id],
         excludes: [excVolo._id, excPasti._id],
         highlights: ["3 fermate in bacari storici", "Cannaregio e ghetto ebraico", "Lontano dalle folle"],
-        featured_image: "public/Images/1735937782553-232982003-97.jpg",
+        featured_image: "public/Images/venice_main_1775670902066.png",
         gallery: [
-          "public/Images/1735939999648-643595691-147.jpg",
-          "public/Images/1735940234253-717521692-97.jpg"
+          "public/Images/venice_gallery_1_1775670922322.png",
+          "public/Images/venice_gallery_2_1775670942363.png"
         ],
         additional_info: {
           group_size: "Massimo 10 persone",
@@ -167,10 +167,10 @@ async function seed() {
         includes: [incGuida._id, incCibo._id],
         excludes: [excMancia._id],
         highlights: ["Quadrilatero della Moda", "Piazza Gae Aulenti", "Aperitivo incluso"],
-        featured_image: "public/Images/1735940356762-455514388-97.jpg",
+        featured_image: "public/Images/milan_main_1775671001085.png",
         gallery: [
-          "public/Images/1735941711506-968353296-97.jpg",
-          "public/Images/1735942836270-834239517-97.jpg"
+          "public/Images/milan_gallery_1_1775671021186.png",
+          "public/Images/milan_gallery_2_1775671040499.png"
         ],
         additional_info: {
           group_size: "Massimo 15 persone",
