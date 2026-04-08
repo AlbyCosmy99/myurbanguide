@@ -1,7 +1,6 @@
 import {
   ChevronDownIcon,
   LinkIcon,
-  PencilIcon,
 } from '@heroicons/react/20/solid';
 import { MdTour, MdAlternateEmail } from 'react-icons/md';
 import { FaPlus } from 'react-icons/fa';
