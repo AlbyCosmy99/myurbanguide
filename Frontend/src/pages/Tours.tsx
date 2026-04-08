@@ -45,7 +45,8 @@ function Tours() {
            <h3 className="text-xl">Nessun tour trovato per questa ricerca.</h3>
          </div>
       ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {displayedTours.map(tour => (
           <SmallCard
             key={tour._id}
@@ -110,6 +111,8 @@ function Tours() {
           </nav>
         </div>
       </div>
+      </>
+      )}
     </SectionContainer>
   );
 }

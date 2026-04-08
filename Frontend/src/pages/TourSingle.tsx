@@ -42,7 +42,7 @@ const TourSingle = () => {
     };
 
     getSingleTour();
-  }, []);
+  }, [tourId]);
 
   useEffect(() => {
     setCenter({

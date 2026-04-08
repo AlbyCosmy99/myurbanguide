@@ -67,22 +67,21 @@ const NavBar = () => {
                   >
                     <div className="p-4">
                       {topTours.map(tour => (
-                        <div
+                        <PopoverButton
                           key={tour._id}
-                          className="group mb-2 relative flex items-center gap-x-3 rounded-lg px-2 py-2 text-sm leading-6 hover:bg-gray-100"
+                          as={Link}
+                          to={`/tours/${tour._id}`}
+                          className="group mb-2 relative flex items-center gap-x-3 rounded-lg px-2 py-2 text-sm leading-6 hover:bg-gray-100 w-full text-left"
                         >
                           <img src={import.meta.env.VITE_UPLOAD_URL + tour.featured_image} className="w-12 h-12 rounded-md object-cover" />
 
                           <div className="flex-auto">
-                            <Link
-                              to={`/tours/${tour._id}`}
-                              className="leading-4 block font-semibold text-gray-900 line-clamp-1 group-hover:text-[#E29C00]"
-                            >
+                            <span className="leading-4 block font-semibold text-gray-900 line-clamp-1 group-hover:text-[#E29C00]">
                               {tour.title}
-                            </Link>
+                            </span>
                             <p className="text-gray-600 line-clamp-1">{tour.meeting_point?.address || 'Destinazione in città'}</p>
                           </div>
-                        </div>
+                        </PopoverButton>
                       ))}
                     </div>
                     <div className="grid divide-x divide-gray-900/5 bg-[#E29C00]">
