@@ -6,7 +6,7 @@ import apiRouter from "./routers/apiRouter.js"
 import rateLimit from "express-rate-limit"
 
 const server = express()
-const port = 3030
+const port = process.env.PORT || 3030
 
 // Using connection string from env or local default
 //express-rate-limit
@@ -28,7 +28,7 @@ const mongouri = process.env.MONGODB_URI || 'mongodb://localhost:27017/myurbangu
 
 mongoose.connect(mongouri)
     .then(() => {
-        server.listen(port, () => {
+        server.listen(port, "0.0.0.0", () => {
             console.log('listening on port', port)
         })
     })
