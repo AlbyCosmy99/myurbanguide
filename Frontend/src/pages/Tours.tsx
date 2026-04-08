@@ -18,13 +18,35 @@ function Tours() {
   }, [page, limit]);
 
   const handlePageChange = (newPage: number) => {
-    setSearchParams({ page: newPage.toString(), limit: limit.toString() });
+    const currentSearch = searchParams.get('search');
+    const newParams: Record<string, string> = { page: newPage.toString(), limit: limit.toString() };
+    if (currentSearch) {
+      newParams.search = currentSearch;
+    }
+    setSearchParams(newParams);
   };
+
+  const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+
+  const displayedTours = tours.data.filter(tour => {
+    if (!searchQuery) return true;
+    return tour.title.toLowerCase().includes(searchQuery) || tour.description.toLowerCase().includes(searchQuery) || tour.meeting_point?.address?.toLowerCase().includes(searchQuery);
+  });
 
   return (
     <SectionContainer>
+      {searchQuery && (
+         <h2 className="text-2xl font-bold pb-6 text-gray-800">
+            Risultati ricerca per: <span className="text-[#E29C00]">"{searchParams.get('search')}"</span>
+         </h2>
+      )}
+      {displayedTours.length === 0 ? (
+         <div className="text-center py-20 text-gray-500">
+           <h3 className="text-xl">Nessun tour trovato per questa ricerca.</h3>
+         </div>
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {tours.data.map(tour => (
+        {displayedTours.map(tour => (
           <SmallCard
             key={tour._id}
             toursLoading={toursLoading}
